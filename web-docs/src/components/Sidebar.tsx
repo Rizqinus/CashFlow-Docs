@@ -216,7 +216,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                 setActiveTab('po-create');
                               }}
                             >
-                              Cara membuat pesanan pembelian
+                              Cara order barang ke supplier dan mencatatnya di CashFlow Online
                             </div>
                             <div 
                               className={`article-link ${activeTab === 'po-dp' ? 'active' : ''}`}
@@ -225,7 +225,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                 setActiveTab('po-dp');
                               }}
                             >
-                              Cara membuat pesanan pembelian dengan uang muka
+                              Cara mencatat DP barang ke supplier
                             </div>
                             <div 
                               className={`article-link ${activeTab === 'po-cancel' ? 'active' : ''}`}
@@ -234,7 +234,52 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                 setActiveTab('po-cancel');
                               }}
                             >
-                              Cara membatalkan pesanan pembelian
+                              Cara membatalkan pesanan barang ke supplier
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'po-so' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Pesanan Pembelian');
+                                setActiveTab('po-so');
+                              }}
+                            >
+                              Cara order barang ke supplier dari pesanan pelanggan
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'po-import' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Pesanan Pembelian');
+                                setActiveTab('po-import');
+                              }}
+                            >
+                              Cara input banyak data pembelian sekaligus dari excel
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'po-valas' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Pesanan Pembelian');
+                                setActiveTab('po-valas');
+                              }}
+                            >
+                              Cara memasukkan data pembelian luar negeri dari excel
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'po-pr' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Pesanan Pembelian');
+                                setActiveTab('po-pr');
+                              }}
+                            >
+                              Membuat pesanan pembelian dari daftar permintaan barang
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'po-delete' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Pesanan Pembelian');
+                                setActiveTab('po-delete');
+                              }}
+                            >
+                              Cara menghapus banyak pesanan pembelian sekaligus
                             </div>
                           </div>
                         )}

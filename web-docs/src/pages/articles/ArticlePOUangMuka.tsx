@@ -8,7 +8,7 @@ interface Props {
 export const ArticlePOUangMuka: React.FC<Props> = ({ onBack }) => {
   return (
     <ArticleTemplate
-      title="Cara Membuat Pesanan Pembelian Dengan Uang Muka"
+      title="Cara Mencatat DP Barang ke Supplier"
       category="Pesanan Pembelian"
       readTime="3 Menit"
       onBack={onBack}

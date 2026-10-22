@@ -8,7 +8,7 @@ interface Props {
 export const ArticlePOBatal: React.FC<Props> = ({ onBack }) => {
   return (
     <ArticleTemplate
-      title="Cara Membatalkan Pesanan Pembelian"
+      title="Cara Membatalkan Pesanan Barang ke Supplier"
       category="Pesanan Pembelian"
       readTime="2 Menit"
       onBack={onBack}
