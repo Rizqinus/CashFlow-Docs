@@ -13,7 +13,7 @@ import { ArticleManual } from './pages/articles/ArticleManual';
 import { ArticlePO } from './pages/articles/ArticlePO';
 import { ArticleErrorZero } from './pages/articles/ArticleErrorZero';
 
-// Halaman Baru Sesuai Help Accurate (Pesanan & Faktur)
+// Halaman Baru Sesuai Help CashFlow (Pesanan & Faktur)
 import { ArticlePesananPembelian } from './pages/articles/ArticlePesananPembelian';
 import { ArticlePOUangMuka } from './pages/articles/ArticlePOUangMuka';
 import { ArticlePOBatal } from './pages/articles/ArticlePOBatal';
@@ -167,7 +167,7 @@ export default function App() {
           )}
         </main>
 
-        {/* RIGHT TABLE OF CONTENTS (HANYA MUNCUL DI ARTIKEL DETAIL SESUAI HELP ACCURATE) */}
+        {/* RIGHT TABLE OF CONTENTS (HANYA MUNCUL DI ARTIKEL DETAIL SESUAI CASHFLOW DOCS) */}
         {activeTab !== 'index' && activeTab !== 'placeholder' && (
           <aside className="toc-sidebar">
             <div className="toc-header">On this page</div>

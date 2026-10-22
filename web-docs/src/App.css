@@ -492,7 +492,7 @@
   margin-bottom: 32px;
 }
 
-/* CARDS GRID (INDEX) - 2 COLUMN GRID PERSIS ACCURATE */
+/* CARDS GRID (INDEX) - 2 COLUMN GRID PERSIS CASHFLOW DOCS */
 .articles-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

@@ -488,6 +488,35 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <div className={`leaf-item ${currentModule === 'Pemasok' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Pemasok')}>Pemasok</div>
                       <div className={`leaf-item ${currentModule === 'Perintah Pembayaran' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Perintah Pembayaran')}>Perintah Pembayaran</div>
                       <div className={`leaf-item ${currentModule === 'Transfer Pemasok' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Transfer Pemasok')}>Transfer Pemasok</div>
+
+                      {/* ARTIKEL PENDUKUNG PEMBELIAN */}
+                      <div 
+                        className={`article-link ${activeTab === 'art-beli-lain' ? 'active' : ''}`}
+                        onClick={() => {
+                          setCurrentModule('Pembelian');
+                          setActiveTab('art-beli-lain');
+                        }}
+                      >
+                        Cara mencatat pembelian yang dilunasi pihak lain
+                      </div>
+                      <div 
+                        className={`article-link ${activeTab === 'art-beli-lebih' ? 'active' : ''}`}
+                        onClick={() => {
+                          setCurrentModule('Pembelian');
+                          setActiveTab('art-beli-lebih');
+                        }}
+                      >
+                        Cara mencatat kelebihan pembayaran pembelian
+                      </div>
+                      <div 
+                        className={`article-link ${activeTab === 'art-beli-pembulatan' ? 'active' : ''}`}
+                        onClick={() => {
+                          setCurrentModule('Pembelian');
+                          setActiveTab('art-beli-pembulatan');
+                        }}
+                      >
+                        Cara mengatur akun pembulatan pada faktur pembelian
+                      </div>
                     </div>
                   )}
                 </div>
