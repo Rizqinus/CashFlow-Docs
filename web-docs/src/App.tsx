@@ -13,8 +13,16 @@ import { ArticleManual } from './pages/articles/ArticleManual';
 import { ArticlePO } from './pages/articles/ArticlePO';
 import { ArticleErrorZero } from './pages/articles/ArticleErrorZero';
 
+// Halaman Baru Sesuai Help Accurate (Pesanan & Faktur)
+import { ArticlePesananPembelian } from './pages/articles/ArticlePesananPembelian';
+import { ArticlePOUangMuka } from './pages/articles/ArticlePOUangMuka';
+import { ArticlePOBatal } from './pages/articles/ArticlePOBatal';
+import { ArticleFakturPembelian } from './pages/articles/ArticleFakturPembelian';
+import { ArticleFakturDariPO } from './pages/articles/ArticleFakturDariPO';
+import { ArticleFakturDariPenerimaan } from './pages/articles/ArticleFakturDariPenerimaan';
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'index' | 'art1' | 'art2' | 'art3' | 'placeholder'>('index');
+  const [activeTab, setActiveTab] = useState<string>('index');
   const [currentModule, setCurrentModule] = useState('Penerimaan Barang');
   const [searchQuery, setSearchQuery] = useState('');
   const [showProdukDropdown, setShowProdukDropdown] = useState(false);
@@ -33,7 +41,9 @@ export default function App() {
     pembelian: true,
     persediaan: false,
     asettetap: false,
-    penerimaan: true
+    penerimaan: true,
+    pesanan: true,
+    faktur: true
   });
 
   const toggleCategory = (cat: string) => {
@@ -132,6 +142,28 @@ export default function App() {
               onBackToIndex={() => setActiveTab('index')}
               onPrevArticle={() => setActiveTab('art2')}
             />
+          )}
+
+          {/* HALAMAN ARTIKEL PESANAN PEMBELIAN */}
+          {activeTab === 'po-create' && (
+            <ArticlePesananPembelian onBack={() => setActiveTab('index')} />
+          )}
+          {activeTab === 'po-dp' && (
+            <ArticlePOUangMuka onBack={() => setActiveTab('index')} />
+          )}
+          {activeTab === 'po-cancel' && (
+            <ArticlePOBatal onBack={() => setActiveTab('index')} />
+          )}
+
+          {/* HALAMAN ARTIKEL FAKTUR PEMBELIAN */}
+          {activeTab === 'faktur-create' && (
+            <ArticleFakturPembelian onBack={() => setActiveTab('index')} />
+          )}
+          {activeTab === 'faktur-po' && (
+            <ArticleFakturDariPO onBack={() => setActiveTab('index')} />
+          )}
+          {activeTab === 'faktur-terima' && (
+            <ArticleFakturDariPenerimaan onBack={() => setActiveTab('index')} />
           )}
         </main>
 

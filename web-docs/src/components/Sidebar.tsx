@@ -192,7 +192,53 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   
                   {openCategories.pembelian && (
                     <div className="module-children">
-                      <div className={`leaf-item ${currentModule === 'Pesanan Pembelian' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Pesanan Pembelian')}>Pesanan Pembelian</div>
+                      {/* SUB-MODUL PESANAN PEMBELIAN */}
+                      <div className="submodule-group active">
+                        <div 
+                          className={`submodule-header ${currentModule === 'Pesanan Pembelian' && activeTab === 'po-index' ? 'selected' : ''}`}
+                          onClick={() => {
+                            handleSelectModule('Pesanan Pembelian');
+                            toggleCategory('pesanan');
+                          }}
+                        >
+                          <span>Pesanan Pembelian</span>
+                          <span className={`arrow ${openCategories.pesanan ? 'down' : ''}`}>
+                            {openCategories.pesanan ? '⌄' : '›'}
+                          </span>
+                        </div>
+
+                        {openCategories.pesanan && (
+                          <div className="article-links">
+                            <div 
+                              className={`article-link ${activeTab === 'po-create' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Pesanan Pembelian');
+                                setActiveTab('po-create');
+                              }}
+                            >
+                              Cara membuat pesanan pembelian
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'po-dp' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Pesanan Pembelian');
+                                setActiveTab('po-dp');
+                              }}
+                            >
+                              Cara membuat pesanan pembelian dengan uang muka
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'po-cancel' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Pesanan Pembelian');
+                                setActiveTab('po-cancel');
+                              }}
+                            >
+                              Cara membatalkan pesanan pembelian
+                            </div>
+                          </div>
+                        )}
+                      </div>
                       
                       {/* SUB-MODUL PENERIMAAN BARANG */}
                       <div className="submodule-group active">
@@ -243,7 +289,53 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       </div>
 
                       <div className={`leaf-item ${currentModule === 'Uang Muka Pembelian' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Uang Muka Pembelian')}>Uang Muka Pembelian</div>
-                      <div className={`leaf-item ${currentModule === 'Faktur Pembelian' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Faktur Pembelian')}>Faktur Pembelian</div>
+                      {/* SUB-MODUL FAKTUR PEMBELIAN */}
+                      <div className="submodule-group active">
+                        <div 
+                          className={`submodule-header ${currentModule === 'Faktur Pembelian' && activeTab === 'faktur-index' ? 'selected' : ''}`}
+                          onClick={() => {
+                            handleSelectModule('Faktur Pembelian');
+                            toggleCategory('faktur');
+                          }}
+                        >
+                          <span>Faktur Pembelian</span>
+                          <span className={`arrow ${openCategories.faktur ? 'down' : ''}`}>
+                            {openCategories.faktur ? '⌄' : '›'}
+                          </span>
+                        </div>
+
+                        {openCategories.faktur && (
+                          <div className="article-links">
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-create' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-create');
+                              }}
+                            >
+                              Cara membuat faktur pembelian
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-po' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-po');
+                              }}
+                            >
+                              Cara memproses PO menjadi tagihan supplier
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-terima' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-terima');
+                              }}
+                            >
+                              Cara membuat invoice dari penerimaan barang
+                            </div>
+                          </div>
+                        )}
+                      </div>
                       <div className={`leaf-item ${currentModule === 'Pembayaran Pembelian' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Pembayaran Pembelian')}>Pembayaran Pembelian</div>
                       <div className={`leaf-item ${currentModule === 'Retur Pembelian' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Retur Pembelian')}>Retur Pembelian</div>
                       <div className={`leaf-item ${currentModule === 'Harga Pemasok' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Harga Pemasok')}>Harga Pemasok</div>
