@@ -370,13 +370,112 @@ export const Sidebar: React.FC<SidebarProps> = ({
                               Cara memproses PO menjadi tagihan supplier
                             </div>
                             <div 
+                              className={`article-link ${activeTab === 'faktur-sebelum-datang' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-sebelum-datang');
+                              }}
+                            >
+                              Cara mencatat invoice supplier sebelum barang datang
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-cost-persediaan' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-cost-persediaan');
+                              }}
+                            >
+                              Cara mencatat beban pembelian ke cost nilai persediaan
+                            </div>
+                            <div 
                               className={`article-link ${activeTab === 'faktur-terima' ? 'active' : ''}`}
                               onClick={() => {
                                 setCurrentModule('Faktur Pembelian');
                                 setActiveTab('faktur-terima');
                               }}
                             >
-                              Cara membuat invoice dari penerimaan barang
+                              Cara membuat invoice pembelian dari barang yang sudah diterima
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-dimuka' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-dimuka');
+                              }}
+                            >
+                              Cara mencatat tagihan supplier sebelum barang diterima
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-error-biaya' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-error-biaya');
+                              }}
+                            >
+                              Cara mengatasi error tidak dapat memperbarui biaya
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-pajak-renovasi' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-pajak-renovasi');
+                              }}
+                            >
+                              Cara menghitung pajak jasa renovasi perorangan
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-ongkir-hpp' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-ongkir-hpp');
+                              }}
+                            >
+                              Cara mencatat biaya ongkir, forwarder, dll. ke HPP barang
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-diskon-jurnal' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-diskon-jurnal');
+                              }}
+                            >
+                              Penyebabnya diskon pembelian tidak muncul di jurnal
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-upload-excel' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-upload-excel');
+                              }}
+                            >
+                              Cara upload faktur pembelian dari excel
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-potong-dp' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-potong-dp');
+                              }}
+                            >
+                              Cara memotong faktur pembelian dengan uang muka
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-error-pembulatan' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-error-pembulatan');
+                              }}
+                            >
+                              Cara mengatasi error akun pembulatan belum diisi
+                            </div>
+                            <div 
+                              className={`article-link ${activeTab === 'faktur-potongan-supplier' ? 'active' : ''}`}
+                              onClick={() => {
+                                setCurrentModule('Faktur Pembelian');
+                                setActiveTab('faktur-potongan-supplier');
+                              }}
+                            >
+                              Mengurangi tagihan pembelian karena potongan supplier
                             </div>
                           </div>
                         )}
@@ -394,6 +493,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <div className={`leaf-item ${currentModule === 'Cara mencatat pembelian yang dilunasi pihak lain' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Cara mencatat pembelian yang dilunasi pihak lain')}>Cara mencatat pembelian yang dilunasi pihak lain</div>
                       <div className={`leaf-item ${currentModule === 'Cara mencatat kelebihan pembayaran pembelian' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Cara mencatat kelebihan pembayaran pembelian')}>Cara mencatat kelebihan pembayaran pembelian</div>
                       <div className={`leaf-item ${currentModule === 'Cara mengatur akun pembulatan pada faktur pembelian' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Cara mengatur akun pembulatan pada faktur pembelian')}>Cara mengatur akun pembulatan pada faktur pembelian</div>
+                      <div className={`leaf-item ${currentModule === 'Cara hitung alokasi biaya tambahan ke harga pokok' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Cara hitung alokasi biaya tambahan ke harga pokok')}>Cara hitung alokasi biaya tambahan ke harga pokok</div>
+                      <div className={`leaf-item ${currentModule === 'Cara bayar PPN pembelian barang dari luar negeri' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Cara bayar PPN pembelian barang dari luar negeri')}>Cara bayar PPN pembelian barang dari luar negeri</div>
                     </div>
                   )}
                 </div>
@@ -419,7 +520,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {/* ASET TETAP */}
                 <div className="module-group">
                   <div className="module-header" onClick={() => toggleCategory('asettetap')}>
-                    <span>Aset Tetap</span>
+                    <span>Asset Tetap</span>
                     <span className={`arrow ${openCategories.asettetap ? 'down' : ''}`}>
                       {openCategories.asettetap ? '⌄' : '›'}
                     </span>
@@ -429,6 +530,39 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <div className={`leaf-item ${currentModule === 'Daftar Aset Tetap' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Daftar Aset Tetap')}>Daftar Aset Tetap</div>
                       <div className={`leaf-item ${currentModule === 'Perubahan Aset' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Perubahan Aset')}>Perubahan Aset</div>
                       <div className={`leaf-item ${currentModule === 'Disposisi Aset' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Disposisi Aset')}>Disposisi Aset</div>
+                    </div>
+                  )}
+                </div>
+
+                {/* MANUFAKTUR */}
+                <div className="module-group">
+                  <div className="module-header" onClick={() => toggleCategory('manufaktur')}>
+                    <span>Manufaktur</span>
+                    <span className={`arrow ${openCategories.manufaktur ? 'down' : ''}`}>
+                      {openCategories.manufaktur ? '⌄' : '›'}
+                    </span>
+                  </div>
+                  {openCategories.manufaktur && (
+                    <div className="module-children">
+                      <div className={`leaf-item ${currentModule === 'Formula Produksi' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Formula Produksi')}>Formula Produksi</div>
+                      <div className={`leaf-item ${currentModule === 'Rencana Produksi' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Rencana Produksi')}>Rencana Produksi</div>
+                      <div className={`leaf-item ${currentModule === 'Perintah Kerja' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Perintah Kerja')}>Perintah Kerja</div>
+                    </div>
+                  )}
+                </div>
+
+                {/* SMARTLINK TAX */}
+                <div className="module-group">
+                  <div className="module-header" onClick={() => toggleCategory('smartlinktax')}>
+                    <span>Smartlink Tax</span>
+                    <span className={`arrow ${openCategories.smartlinktax ? 'down' : ''}`}>
+                      {openCategories.smartlinktax ? '⌄' : '›'}
+                    </span>
+                  </div>
+                  {openCategories.smartlinktax && (
+                    <div className="module-children">
+                      <div className={`leaf-item ${currentModule === 'Integrasi e-Faktur' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Integrasi e-Faktur')}>Integrasi e-Faktur</div>
+                      <div className={`leaf-item ${currentModule === 'SPT Masa PPh / PPN' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('SPT Masa PPh / PPN')}>SPT Masa PPh / PPN</div>
                     </div>
                   )}
                 </div>
