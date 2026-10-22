@@ -488,13 +488,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <div className={`leaf-item ${currentModule === 'Pemasok' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Pemasok')}>Pemasok</div>
                       <div className={`leaf-item ${currentModule === 'Perintah Pembayaran' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Perintah Pembayaran')}>Perintah Pembayaran</div>
                       <div className={`leaf-item ${currentModule === 'Transfer Pemasok' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Transfer Pemasok')}>Transfer Pemasok</div>
-
-                      {/* ARTIKEL LEPAS DI BAWAH MODUL PEMBELIAN */}
-                      <div className={`leaf-item ${currentModule === 'Cara mencatat pembelian yang dilunasi pihak lain' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Cara mencatat pembelian yang dilunasi pihak lain')}>Cara mencatat pembelian yang dilunasi pihak lain</div>
-                      <div className={`leaf-item ${currentModule === 'Cara mencatat kelebihan pembayaran pembelian' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Cara mencatat kelebihan pembayaran pembelian')}>Cara mencatat kelebihan pembayaran pembelian</div>
-                      <div className={`leaf-item ${currentModule === 'Cara mengatur akun pembulatan pada faktur pembelian' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Cara mengatur akun pembulatan pada faktur pembelian')}>Cara mengatur akun pembulatan pada faktur pembelian</div>
-                      <div className={`leaf-item ${currentModule === 'Cara hitung alokasi biaya tambahan ke harga pokok' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Cara hitung alokasi biaya tambahan ke harga pokok')}>Cara hitung alokasi biaya tambahan ke harga pokok</div>
-                      <div className={`leaf-item ${currentModule === 'Cara bayar PPN pembelian barang dari luar negeri' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Cara bayar PPN pembelian barang dari luar negeri')}>Cara bayar PPN pembelian barang dari luar negeri</div>
                     </div>
                   )}
                 </div>
@@ -513,56 +506,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <div className={`leaf-item ${currentModule === 'Penyesuaian Persediaan' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Penyesuaian Persediaan')}>Penyesuaian Persediaan</div>
                       <div className={`leaf-item ${currentModule === 'Pemindahan Barang' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Pemindahan Barang')}>Pemindahan Barang</div>
                       <div className={`leaf-item ${currentModule === 'Gudang' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Gudang')}>Gudang</div>
-                    </div>
-                  )}
-                </div>
-
-                {/* ASET TETAP */}
-                <div className="module-group">
-                  <div className="module-header" onClick={() => toggleCategory('asettetap')}>
-                    <span>Asset Tetap</span>
-                    <span className={`arrow ${openCategories.asettetap ? 'down' : ''}`}>
-                      {openCategories.asettetap ? '⌄' : '›'}
-                    </span>
-                  </div>
-                  {openCategories.asettetap && (
-                    <div className="module-children">
-                      <div className={`leaf-item ${currentModule === 'Daftar Aset Tetap' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Daftar Aset Tetap')}>Daftar Aset Tetap</div>
-                      <div className={`leaf-item ${currentModule === 'Perubahan Aset' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Perubahan Aset')}>Perubahan Aset</div>
-                      <div className={`leaf-item ${currentModule === 'Disposisi Aset' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Disposisi Aset')}>Disposisi Aset</div>
-                    </div>
-                  )}
-                </div>
-
-                {/* MANUFAKTUR */}
-                <div className="module-group">
-                  <div className="module-header" onClick={() => toggleCategory('manufaktur')}>
-                    <span>Manufaktur</span>
-                    <span className={`arrow ${openCategories.manufaktur ? 'down' : ''}`}>
-                      {openCategories.manufaktur ? '⌄' : '›'}
-                    </span>
-                  </div>
-                  {openCategories.manufaktur && (
-                    <div className="module-children">
-                      <div className={`leaf-item ${currentModule === 'Formula Produksi' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Formula Produksi')}>Formula Produksi</div>
-                      <div className={`leaf-item ${currentModule === 'Rencana Produksi' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Rencana Produksi')}>Rencana Produksi</div>
-                      <div className={`leaf-item ${currentModule === 'Perintah Kerja' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Perintah Kerja')}>Perintah Kerja</div>
-                    </div>
-                  )}
-                </div>
-
-                {/* SMARTLINK TAX */}
-                <div className="module-group">
-                  <div className="module-header" onClick={() => toggleCategory('smartlinktax')}>
-                    <span>Smartlink Tax</span>
-                    <span className={`arrow ${openCategories.smartlinktax ? 'down' : ''}`}>
-                      {openCategories.smartlinktax ? '⌄' : '›'}
-                    </span>
-                  </div>
-                  {openCategories.smartlinktax && (
-                    <div className="module-children">
-                      <div className={`leaf-item ${currentModule === 'Integrasi e-Faktur' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('Integrasi e-Faktur')}>Integrasi e-Faktur</div>
-                      <div className={`leaf-item ${currentModule === 'SPT Masa PPh / PPN' ? 'active-sub' : ''}`} onClick={() => handleSelectModule('SPT Masa PPh / PPN')}>SPT Masa PPh / PPN</div>
                     </div>
                   )}
                 </div>
