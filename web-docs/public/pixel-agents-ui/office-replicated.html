@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Agents - Valkyrie Specialized Office</title>
+  <style>
+    :root {
+      --bg-dark: #12151d;
+      --panel-dark: #1a1e29;
+      --card-dark: #222736;
+      --border-color: #2e3447;
+      --accent-blue: #4f46e5;
+      --accent-green: #10b981;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Floating Toolbar matching Pixel Agents */
+    .top-toolbar {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      right: 16px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    .toolbar-left, .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+    }
+
+    .brand-pill {
+      background: rgba(26, 30, 41, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+
+    .brand-logo-img {
+      width: 22px;
+      height: 22px;
+      image-rendering: pixelated;
+    }
+
+    .brand-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+
+    .tool-btn {
+      background: rgba(26, 30, 41, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .tool-btn:hover {
+      background: var(--card-dark);
+      border-color: #3b82f6;
+    }
+
+    .btn-create-agent {
+      background: #2563eb;
+      border: 1px solid #3b82f6;
+      color: #fff;
+    }
+    .btn-create-agent:hover {
+      background: #1d4ed8;
+    }
+
+    /* Main Canvas Workspace */
+    .viewport-container {
+      flex: 1;
+      position: relative;
+      background: #10131c;
+      overflow: hidden;
+      cursor: grab;
+    }
+
+    .viewport-container:active {
+      cursor: grabbing;
+    }
+
+    #office-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      image-rendering: pixelated;
+    }
+
+    /* Bottom Bottom Drawer (Active Agents Bar) */
+    .bottom-agents-bar {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      display: flex;
+      gap: 8px;
+      z-index: 50;
+      pointer-events: auto;
+    }
+
+    .agent-pill {
+      background: rgba(26, 30, 41, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      padding: 6px 14px 6px 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      transition: all 0.2s;
+    }
+
+    .agent-pill:hover, .agent-pill.active {
+      border-color: #38bdf8;
+      background: #232a3b;
+      transform: translateY(-2px);
+    }
+
+    .agent-pill-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    .agent-pill-name {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .agent-pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    /* Inspector Right Panel */
+    .inspector-panel {
+      position: absolute;
+      top: 72px;
+      right: 16px;
+      bottom: 16px;
+      width: 340px;
+      background: rgba(26, 30, 41, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      z-index: 50;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .inspector-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .inspector-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .inspector-content {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .agent-profile-box {
+      background: var(--card-dark);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .agent-lg-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: #312e81;
+    }
+
+    .meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-size: 12px;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .terminal-output {
+      flex: 1;
+      background: #090c12;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      color: #38bdf8;
+      overflow-y: auto;
+      line-height: 1.5;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      background: #064e3b;
+      color: #34d399;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Floating Controls -->
+  <div class="top-toolbar">
+    <div class="toolbar-left">
+      <div class="brand-pill">
+        <img class="brand-logo-img" src="./icons/icon-256.png" alt="logo" onerror="this.style.display='none'">
+        <span class="brand-title">Pixel Agents Office</span>
+      </div>
+      <button class="tool-btn" onclick="zoomIn()">➕ Zoom In</button>
+      <button class="tool-btn" onclick="zoomOut()">➖ Zoom Out</button>
+      <button class="tool-btn" onclick="resetView()">🎯 Center</button>
+    </div>
+
+    <div class="toolbar-right">
+      <button class="tool-btn btn-create-agent" onclick="triggerSprint()">🚀 Run Full Sprint</button>
+      <button class="tool-btn" onclick="sendToLounge()">☕ Coffee Lounge</button>
+      <button class="tool-btn" onclick="toggleInspector()">📋 Toggle Inspector</button>
+    </div>
+  </div>
+
+  <!-- Interactive Canvas Viewport -->
+  <div class="viewport-container">
+    <canvas id="office-canvas"></canvas>
+
+    <!-- Bottom Active Agents Bar -->
+    <div class="bottom-agents-bar" id="agents-pill-list"></div>
+
+    <!-- Right Inspector Panel -->
+    <div class="inspector-panel" id="inspector-panel">
+      <div class="inspector-header">
+        <span class="inspector-title">AGENT MONITOR</span>
+        <span class="status-badge" id="inspector-badge">ACTIVE</span>
+      </div>
+      <div class="inspector-content">
+        <div class="agent-profile-box">
+          <div class="agent-lg-avatar" id="inspector-avatar">👑</div>
+          <div>
+            <div style="font-weight: 700; font-size: 14px;" id="inspector-name">Valkyrie-PM</div>
+            <div style="font-size: 11px; color: var(--text-muted);" id="inspector-role">Orchestrator & Management</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="meta-label">Current Obligation / Task</div>
+          <div class="meta-value" id="inspector-task" style="background: var(--card-dark); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border-color);">
+            Orchestrating autonomous sprint & task dependencies
+          </div>
+        </div>
+
+        <div>
+          <div class="meta-label">Authorized Toolchain</div>
+          <div class="meta-value" id="inspector-tools" style="font-family: monospace; font-size: 11px; color: #38bdf8;">
+            clarify, delegate_task, memory
+          </div>
+        </div>
+
+        <div style="flex: 1; display: flex; flex-direction: column;">
+          <div class="meta-label">Subagent Terminal Stream</div>
+          <div class="terminal-output" id="inspector-terminal"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('office-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Load authentic assets from official pixel-agents directory
+    const assets = {
+      wall: new Image(),
+      floor0: new Image(),
+      floor1: new Image(),
+      floor2: new Image(),
+      floor3: new Image(),
+      desk: new Image(),
+      deskSide: new Image(),
+      chair: new Image(),
+      pc: new Image(),
+      pc2: new Image(),
+      pc3: new Image(),
+      plant: new Image(),
+      plant2: new Image(),
+      largePlant: new Image(),
+      bookshelf: new Image(),
+      whiteboard: new Image(),
+      sofa: new Image(),
+      sofaSide: new Image(),
+      tableFront: new Image(),
+      smallTable: new Image(),
+      coffeeTable: new Image(),
+      coffee: new Image(),
+      carpet0: new Image(),
+      carpet1: new Image(),
+      carpet2: new Image(),
+      paintingLg: new Image(),
+      paintingSm: new Image(),
+      paintingSm2: new Image(),
+      hangingPlant: new Image(),
+      clock: new Image(),
+      bin: new Image(),
+      cactus: new Image(),
+      char0: new Image(),
+      char1: new Image(),
+      char2: new Image(),
+      char3: new Image(),
+      char4: new Image(),
+      pet: new Image()
+    };
+
+    assets.wall.src = './assets/walls/wall_0.png';
+    assets.floor0.src = './assets/floors/floor_0.png';
+    assets.floor1.src = './assets/floors/floor_1.png';
+    assets.floor2.src = './assets/floors/floor_2.png';
+    assets.floor3.src = './assets/floors/floor_3.png';
+    assets.desk.src = './assets/furniture/DESK/DESK_FRONT.png';
+    assets.deskSide.src = './assets/furniture/DESK/DESK_SIDE.png';
+    assets.chair.src = './assets/furniture/CUSHIONED_CHAIR/CUSHIONED_CHAIR_FRONT.png';
+    assets.pc.src = './assets/furniture/PC/PC_FRONT_ON_1.png';
+    assets.pc2.src = './assets/furniture/PC/PC_FRONT_ON_2.png';
+    assets.pc3.src = './assets/furniture/PC/PC_FRONT_ON_3.png';
+    assets.plant.src = './assets/furniture/PLANT/PLANT.png';
+    assets.plant2.src = './assets/furniture/PLANT_2/PLANT_2.png';
+    assets.largePlant.src = './assets/furniture/LARGE_PLANT/LARGE_PLANT.png';
+    assets.bookshelf.src = './assets/furniture/DOUBLE_BOOKSHELF/DOUBLE_BOOKSHELF.png';
+    assets.whiteboard.src = './assets/furniture/WHITEBOARD/WHITEBOARD.png';
+    assets.sofa.src = './assets/furniture/SOFA/SOFA_FRONT.png';
+    assets.sofaSide.src = './assets/furniture/SOFA/SOFA_SIDE.png';
+    assets.tableFront.src = './assets/furniture/TABLE_FRONT/TABLE_FRONT.png';
+    assets.smallTable.src = './assets/furniture/SMALL_TABLE/SMALL_TABLE_FRONT.png';
+    assets.coffeeTable.src = './assets/furniture/COFFEE_TABLE/COFFEE_TABLE.png';
+    assets.coffee.src = './assets/furniture/COFFEE/COFFEE.png';
+    assets.carpet0.src = './assets/carpets/carpet_0.png';
+    assets.carpet1.src = './assets/carpets/carpet_1.png';
+    assets.carpet2.src = './assets/carpets/carpet_2.png';
+    assets.paintingLg.src = './assets/furniture/LARGE_PAINTING/LARGE_PAINTING.png';
+    assets.paintingSm.src = './assets/furniture/SMALL_PAINTING/SMALL_PAINTING.png';
+    assets.paintingSm2.src = './assets/furniture/SMALL_PAINTING_2/SMALL_PAINTING_2.png';
+    assets.hangingPlant.src = './assets/furniture/HANGING_PLANT/HANGING_PLANT.png';
+    assets.clock.src = './assets/furniture/CLOCK/CLOCK.png';
+    assets.bin.src = './assets/furniture/BIN/BIN.png';
+    assets.cactus.src = './assets/furniture/CACTUS/CACTUS.png';
+    assets.char0.src = './assets/characters/char_0.png';
+    assets.char1.src = './assets/characters/char_1.png';
+    assets.char2.src = './assets/characters/char_2.png';
+    assets.char3.src = './assets/characters/char_3.png';
+    assets.char4.src = './assets/characters/char_4.png';
+    assets.pet.src = './assets/pets/gitcat/pet.png';
+
+    // 5 Functional Division Agents
+    const agents = [
+      {
+        id: 'pm',
+        name: 'Valkyrie-PM',
+        role: 'Orchestrator & Architecture Lead',
+        division: 'Management',
+        charImg: 'char0',
+        avatarBg: '#2563eb',
+        avatarTxt: '👑',
+        x: 160,
+        y: 150,
+        deskX: 160,
+        deskY: 150,
+        targetX: 160,
+        targetY: 150,
+        state: 'working',
+        tools: 'clarify, delegate_task, memory',
+        task: 'Orchestrating autonomous sprint & task dependencies',
+        color: '#38bdf8',
+        bubble: 'Delegating sprint tasks...'
+      },
+      {
+        id: 'frontend',
+        name: 'UI-Architect',
+        role: 'Frontend Systems & UI Engineer',
+        division: 'Engineering',
+        charImg: 'char1',
+        avatarBg: '#059669',
+        avatarTxt: '💻',
+        x: 450,
+        y: 150,
+        deskX: 450,
+        deskY: 150,
+        targetX: 450,
+        targetY: 150,
+        state: 'working',
+        tools: 'write_file, patch, browser_exec',
+        task: 'Refining CashFlow web-docs UI & canvas layout',
+        color: '#34d399',
+        bubble: 'Vite HMR: 0ms reload'
+      },
+      {
+        id: 'security',
+        name: 'HexSentinel',
+        role: 'SecOps & Security Auditor',
+        division: 'Security & QA',
+        charImg: 'char2',
+        avatarBg: '#dc2626',
+        avatarTxt: '🛡️',
+        x: 730,
+        y: 150,
+        deskX: 730,
+        deskY: 150,
+        targetX: 730,
+        targetY: 150,
+        state: 'working',
+        tools: 'terminal, rea, security-audit',
+        task: 'Auditing port 20128 & local process sandboxing',
+        color: '#f87171',
+        bubble: 'Network boundaries clean'
+      },
+      {
+        id: 'writer',
+        name: 'DocuMaster',
+        role: 'Technical Knowledge Curator',
+        division: 'Content',
+        charImg: 'char3',
+        avatarBg: '#7c3aed',
+        avatarTxt: '📝',
+        x: 260,
+        y: 380,
+        deskX: 260,
+        deskY: 380,
+        targetX: 260,
+        targetY: 380,
+        state: 'reading',
+        tools: 'web_extract, obsidian, doc-coauthoring',
+        task: 'Maintaining PARA vault & bi-directional links',
+        color: '#c084fc',
+        bubble: 'Syncing MindForge Index.md...'
+      },
+      {
+        id: 'researcher',
+        name: 'ScoutAgent',
+        role: 'Web Intelligence & Recon',
+        division: 'Research',
+        charImg: 'char4',
+        avatarBg: '#d97706',
+        avatarTxt: '🔎',
+        x: 650,
+        y: 380,
+        deskX: 650,
+        deskY: 380,
+        targetX: 650,
+        targetY: 380,
+        state: 'working',
+        tools: 'web_search, browser_use, agent-reach',
+        task: 'Benchmarking state-of-the-art multi-agent repos',
+        color: '#fbbf24',
+        bubble: 'Identified: pixel-agents v1.5'
+      }
+    ];
+
+    let selectedAgentId = 'pm';
+    let zoomLevel = 1.0;
+    let panX = 0;
+    let panY = 0;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let logs = [];
+
+    function addLog(name, text) {
+      const time = new Date().toLocaleTimeString('id-ID');
+      logs.unshift(`[${time}] ${name}: ${text}`);
+      if (logs.length > 25) logs.pop();
+      const el = document.getElementById('inspector-terminal');
+      el.innerHTML = logs.map(l => `<div style="margin-bottom: 4px;">${l}</div>`).join('');
+    }
+
+    function renderAgentPills() {
+      const container = document.getElementById('agents-pill-list');
+      container.innerHTML = agents.map(a => `
+        <div class="agent-pill ${a.id === selectedAgentId ? 'active' : ''}" onclick="selectAgent('${a.id}')">
+          <div class="agent-pill-avatar" style="background: ${a.avatarBg}">${a.avatarTxt}</div>
+          <span class="agent-pill-name">${a.name}</span>
+          <div class="agent-pill-dot"></div>
+        </div>
+      `).join('');
+    }
+
+    function selectAgent(id) {
+      selectedAgentId = id;
+      renderAgentPills();
+      const a = agents.find(ag => ag.id === id);
+      document.getElementById('inspector-name').innerText = a.name;
+      document.getElementById('inspector-role').innerText = a.role;
+      document.getElementById('inspector-task').innerText = a.task;
+      document.getElementById('inspector-tools').innerText = a.tools;
+      document.getElementById('inspector-avatar').innerText = a.avatarTxt;
+      document.getElementById('inspector-avatar').style.background = a.avatarBg;
+      addLog('NAVIGATOR', `Focusing camera on ${a.name} (${a.division})`);
+    }
+
+    function resize() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Pan & Zoom events
+    canvas.addEventListener('mousedown', e => {
+      isDragging = true;
+      startX = e.clientX - panX;
+      startY = e.clientY - panY;
+    });
+    window.addEventListener('mousemove', e => {
+      if (isDragging) {
+        panX = e.clientX - startX;
+        panY = e.clientY - startY;
+      }
+    });
+    window.addEventListener('mouseup', () => isDragging = false);
+    canvas.addEventListener('wheel', e => {
+      e.preventDefault();
+      const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9;
+      zoomLevel = Math.min(Math.max(0.6, zoomLevel * zoomFactor), 2.2);
+    });
+
+    function zoomIn() { zoomLevel = Math.min(2.2, zoomLevel * 1.2); }
+    function zoomOut() { zoomLevel = Math.max(0.6, zoomLevel * 0.8); }
+    function resetView() { zoomLevel = 1.0; panX = 0; panY = 0; }
+
+    function toggleInspector() {
+      const p = document.getElementById('inspector-panel');
+      p.style.display = p.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    let tick = 0;
+    function render() {
+      tick++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.save();
+      ctx.translate(panX, panY);
+      ctx.scale(zoomLevel, zoomLevel);
+
+      // Floor tiles - Authentic pixel-art floor
+      const tileSize = 32;
+      const cols = 45;
+      const rows = 28;
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const isEven = (r + c) % 2 === 0;
+          ctx.fillStyle = isEven ? '#1e2330' : '#191d29';
+          ctx.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
+          ctx.strokeStyle = '#141822';
+          ctx.strokeRect(c * tileSize, r * tileSize, tileSize, tileSize);
+        }
+      }
+
+      // Office Walls at top
+      ctx.fillStyle = '#2b3145';
+      ctx.fillRect(0, 0, cols * tileSize, 32);
+      ctx.fillStyle = '#1c202e';
+      ctx.fillRect(0, 28, cols * tileSize, 4);
+
+      // 5 DEDICATED ROOMS (Floor & Dividers)
+      const rooms = [
+        { id: 'boardroom', name: 'EXECUTIVE BOARDROOM', x: 20, y: 36, w: 280, h: 220, floor: assets.floor0, carpet: assets.carpet0, color: '#38bdf8' },
+        { id: 'devlab', name: 'DEV LAB (FRONTEND)', x: 310, y: 36, w: 280, h: 220, floor: assets.floor1, carpet: assets.carpet1, color: '#34d399' },
+        { id: 'secops', name: 'SECOPS BUNKER (QA)', x: 600, y: 36, w: 260, h: 220, floor: assets.floor2, carpet: assets.carpet2, color: '#f87171' },
+        { id: 'vault', name: 'VAULT & DOCUMENTATION', x: 80, y: 270, w: 360, h: 220, floor: assets.floor3, carpet: assets.carpet0, color: '#c084fc' },
+        { id: 'research', name: 'INTELLIGENCE POD', x: 460, y: 270, w: 380, h: 220, floor: assets.floor1, carpet: assets.carpet1, color: '#fbbf24' },
+        { id: 'lounge', name: 'PANTRY & LOUNGE', x: 870, y: 36, w: 230, h: 454, floor: assets.floor0, carpet: assets.carpet2, color: '#10b981' }
+      ];
+
+      rooms.forEach(r => {
+        // Draw Room Tiles
+        const rCols = Math.floor(r.w / tileSize);
+        const rRows = Math.floor(r.h / tileSize);
+        for (let ry = 0; ry < rRows; ry++) {
+          for (let rx = 0; rx < rCols; rx++) {
+            if (r.floor.complete && r.floor.naturalWidth > 0) {
+              ctx.drawImage(r.floor, r.x + rx * tileSize, r.y + ry * tileSize, tileSize, tileSize);
+            } else {
+              ctx.fillStyle = '#1e2330';
+              ctx.fillRect(r.x + rx * tileSize, r.y + ry * tileSize, tileSize, tileSize);
+            }
+          }
+        }
+
+        // Room Inner Carpet
+        if (r.carpet.complete && r.carpet.naturalWidth > 0) {
+          ctx.drawImage(r.carpet, r.x + 30, r.y + 40, r.w - 60, r.h - 60);
+        }
+
+        // Outer Glass Room Walls / Partitions
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(r.x, r.y, r.w, r.h);
+
+        // Room Label Signboard
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(r.x + 10, r.y - 10, ctx.measureText(r.name).width + 20, 20);
+        ctx.strokeStyle = r.color;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(r.x + 10, r.y - 10, ctx.measureText(r.name).width + 20, 20);
+
+        ctx.fillStyle = r.color;
+        ctx.font = 'bold 9px monospace';
+        ctx.fillText(r.name, r.x + 20, r.y + 4);
+      });
+
+      // --- ROOM 1: EXECUTIVE BOARDROOM DECORATIONS (Valkyrie-PM) ---
+      // Conference Table, Whiteboard, Bookshelf, Plants
+      if (assets.whiteboard.complete && assets.whiteboard.naturalWidth > 0) {
+        ctx.drawImage(assets.whiteboard, 40, 48, 64, 48);
+      }
+      if (assets.bookshelf.complete && assets.bookshelf.naturalWidth > 0) {
+        ctx.drawImage(assets.bookshelf, 120, 42, 64, 52);
+      }
+      if (assets.largePlant.complete && assets.largePlant.naturalWidth > 0) {
+        ctx.drawImage(assets.largePlant, 240, 48, 32, 48);
+      }
+      if (assets.clock.complete && assets.clock.naturalWidth > 0) {
+        ctx.drawImage(assets.clock, 200, 44, 18, 18);
+      }
+
+      // --- ROOM 2: DEV LAB (FRONTEND UI ARCHITECT) ---
+      // Dual Displays, Design Desk, Side Tables, Posters
+      if (assets.paintingLg.complete && assets.paintingLg.naturalWidth > 0) {
+        ctx.drawImage(assets.paintingLg, 330, 42, 54, 28);
+      }
+      if (assets.hangingPlant.complete && assets.hangingPlant.naturalWidth > 0) {
+        ctx.drawImage(assets.hangingPlant, 420, 38, 24, 28);
+        ctx.drawImage(assets.hangingPlant, 540, 38, 24, 28);
+      }
+      if (assets.smallTable.complete && assets.smallTable.naturalWidth > 0) {
+        ctx.drawImage(assets.smallTable, 530, 90, 32, 32);
+      }
+
+      // --- ROOM 3: SECOPS BUNKER (HEXSENTINEL SECURITY & QA) ---
+      // Security Monitors, Wall Certs, Cactus, Server Racks
+      if (assets.paintingSm.complete && assets.paintingSm.naturalWidth > 0) {
+        ctx.drawImage(assets.paintingSm, 620, 44, 28, 20);
+        ctx.drawImage(assets.paintingSm, 760, 44, 28, 20);
+      }
+      if (assets.cactus.complete && assets.cactus.naturalWidth > 0) {
+        ctx.drawImage(assets.cactus, 810, 80, 24, 32);
+      }
+      if (assets.bin.complete && assets.bin.naturalWidth > 0) {
+        ctx.drawImage(assets.bin, 620, 160, 16, 18);
+      }
+
+      // --- ROOM 4: VAULT & DOCUMENTATION (DOCUMASTER) ---
+      // Heavy Bookshelves, Filing Cabinets, Study Desk, Archive Plants
+      if (assets.bookshelf.complete && assets.bookshelf.naturalWidth > 0) {
+        ctx.drawImage(assets.bookshelf, 100, 280, 64, 52);
+        ctx.drawImage(assets.bookshelf, 168, 280, 64, 52);
+      }
+      if (assets.whiteboard.complete && assets.whiteboard.naturalWidth > 0) {
+        ctx.drawImage(assets.whiteboard, 350, 280, 64, 48);
+      }
+      if (assets.plant2.complete && assets.plant2.naturalWidth > 0) {
+        ctx.drawImage(assets.plant2, 90, 430, 32, 40);
+      }
+
+      // --- ROOM 5: INTELLIGENCE POD (SCOUTAGENT WEB RESEARCH) ---
+      // World Maps, Research Desks, Coffee, Recon Displays
+      if (assets.paintingLg.complete && assets.paintingLg.naturalWidth > 0) {
+        ctx.drawImage(assets.paintingLg, 490, 280, 54, 28);
+      }
+      if (assets.clock.complete && assets.clock.naturalWidth > 0) {
+        ctx.drawImage(assets.clock, 580, 282, 18, 18);
+      }
+      if (assets.smallTable.complete && assets.smallTable.naturalWidth > 0) {
+        ctx.drawImage(assets.smallTable, 760, 340, 32, 32);
+      }
+
+      // --- ROOM 6: PANTRY & REST LOUNGE ---
+      // Double Sofas, Center Coffee Table with Steaming Mug, Cat Mascot
+      if (assets.sofa.complete && assets.sofa.naturalWidth > 0) {
+        ctx.drawImage(assets.sofa, 920, 120, 64, 48);
+        ctx.drawImage(assets.sofa, 920, 260, 64, 48);
+      }
+      if (assets.coffeeTable.complete && assets.coffeeTable.naturalWidth > 0) {
+        ctx.drawImage(assets.coffeeTable, 932, 185, 40, 40);
+      }
+      if (assets.coffee.complete && assets.coffee.naturalWidth > 0) {
+        ctx.drawImage(assets.coffee, 944, 190, 16, 16);
+      }
+      if (assets.largePlant.complete && assets.largePlant.naturalWidth > 0) {
+        ctx.drawImage(assets.largePlant, 1040, 60, 32, 48);
+        ctx.drawImage(assets.largePlant, 1040, 410, 32, 48);
+      }
+
+      // Office Cat Pet in Lounge
+      if (assets.pet.complete && assets.pet.naturalWidth > 0) {
+        const petBob = Math.sin(tick * 0.1) * 2;
+        ctx.drawImage(assets.pet, 0, 0, 32, 32, 990, 195 + petBob, 32, 32);
+      }
+
+      // Render Workstations (Desk, Chair, PC, Plant)
+      agents.forEach(a => {
+        // Chair behind desk
+        if (assets.chair.complete && assets.chair.naturalWidth > 0) {
+          ctx.drawImage(assets.chair, a.deskX - 16, a.deskY + 14, 32, 32);
+        }
+        // Wooden Desk
+        if (assets.desk.complete && assets.desk.naturalWidth > 0) {
+          ctx.drawImage(assets.desk, a.deskX - 32, a.deskY - 20, 64, 40);
+        }
+        // Dual / Single PC Monitors
+        if (assets.pc.complete && assets.pc.naturalWidth > 0) {
+          ctx.drawImage(assets.pc, a.deskX - 22, a.deskY - 26, 24, 24);
+          ctx.drawImage(assets.pc, a.deskX + 2, a.deskY - 26, 24, 24);
+        }
+        // Small Plant on Desk
+        if (assets.plant.complete && assets.plant.naturalWidth > 0) {
+          ctx.drawImage(assets.plant, a.deskX + 26, a.deskY - 18, 16, 24);
+        }
+      });
+
+      // Render Agents
+      agents.forEach(a => {
+        const dx = a.targetX - a.x;
+        const dy = a.targetY - a.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist > 2) {
+          a.x += (dx / dist) * 1.8;
+          a.y += (dy / dist) * 1.8;
+        }
+
+        // Selection Target Ring
+        if (a.id === selectedAgentId) {
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(a.x, a.y + 8, 22 + Math.sin(tick * 0.1) * 2, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        const bob = Math.sin(tick * 0.15 + a.x) * 2;
+
+        // Shadow
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        ctx.beginPath();
+        ctx.ellipse(a.x, a.y + 20, 14, 6, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Sprite Character from Pixel Agents assets
+        const sprite = assets[a.charImg];
+        if (sprite && sprite.complete && sprite.naturalWidth > 0) {
+          // Frame slicing: 32x32 per frame
+          const frame = Math.floor((tick + a.x) / 10) % 4;
+          ctx.drawImage(sprite, frame * 32, 0, 32, 32, a.x - 16, a.y - 16 + bob, 32, 32);
+        } else {
+          // Fallback pixel character
+          ctx.fillStyle = a.color;
+          ctx.fillRect(a.x - 10, a.y + bob, 20, 18);
+          ctx.fillStyle = '#fed7aa';
+          ctx.fillRect(a.x - 8, a.y - 14 + bob, 16, 14);
+        }
+
+        // Nameplate
+        ctx.fillStyle = '#f9fafb';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(a.name, a.x, a.y + 32);
+
+        // Speech Bubble
+        if (a.bubble) {
+          const bubbleW = ctx.measureText(a.bubble).width + 16;
+          const bubbleH = 20;
+          const bx = a.x - bubbleW / 2;
+          const by = a.y - 42 + bob;
+
+          ctx.fillStyle = '#111827';
+          ctx.strokeStyle = a.color;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.roundRect(bx, by, bubbleW, bubbleH, 6);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#f3f4f6';
+          ctx.font = '10px monospace';
+          ctx.fillText(a.bubble, a.x, by + 14);
+        }
+      });
+
+      ctx.restore();
+      requestAnimationFrame(render);
+    }
+    render();
+
+    // Sprint Execution
+    function triggerSprint() {
+      addLog('Valkyrie-PM', 'Starting orchestrated sprint across all divisions.');
+      setTimeout(() => {
+        agents[4].bubble = 'Benchmarking tools...';
+        addLog(agents[4].name, 'Research: Benchmark complete.');
+      }, 600);
+      setTimeout(() => {
+        agents[1].bubble = 'Compiling components...';
+        addLog(agents[1].name, 'Engineering: Hot reload active.');
+      }, 1400);
+      setTimeout(() => {
+        agents[2].bubble = 'Security fuzzing...';
+        addLog(agents[2].name, 'SecOps: Port sandbox verified.');
+      }, 2200);
+      setTimeout(() => {
+        agents[3].bubble = 'Updating docs...';
+        addLog(agents[3].name, 'Docs: Synced with Obsidian.');
+      }, 3000);
+    }
+
+    function sendToLounge() {
+      agents.forEach((a, i) => {
+        a.state = 'idle';
+        a.targetX = 930;
+        a.targetY = 150 + i * 45;
+        a.bubble = '☕ Coffee break...';
+      });
+      addLog('SYSTEM', 'Agents moved to lounge.');
+    }
+
+    // Init
+    addLog('SYSTEM', 'Pixel Agents Specialized Office initialized.');
+    addLog('Valkyrie-PM', '5 Functional Divisions synchronized on port 5173.');
+    renderAgentPills();
+    selectAgent('pm');
+  </script>
+</body>
+</html>

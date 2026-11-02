@@ -47,28 +47,24 @@ export const ArticlePO: React.FC<ArticleProps> = ({ onBackToIndex, onNextArticle
         
         <div className="step-section">
           <h3>1. Buka formulir Penerimaan Barang dan Pilih Supplier</h3>
-          <p>Buka menu <strong>Pembelian ➔ Penerimaan Barang</strong>. Pada kolom <em>Pemasok</em>, pilih nama pemasok yang sesuai dengan dokumen pesanan.</p>
+          <p>Buka menu <strong>Pembelian ➔ Penerimaan Barang</strong>. Pada kolom <em>Supplier</em>, tentukan pemasok yang bersangkutan (misal: <code>abc / a001</code>) beserta tanggal penerimaan.</p>
+        </div>
+
+        <div className="step-section">
+          <h3>2. Klik tombol "Ambil" ➔ Pilih "Pesanan Pembelian"</h3>
+          <p>Pada formulir sebelah kanan, klik menu <strong>Ambil</strong> lalu pilih opsi <strong>Pesanan Pembelian</strong>.</p>
           <div className="img-wrapper">
-            <img src="/assets/step1-menu-pembelian.png" alt="Form Penerimaan Pesanan Baru" />
-            <span className="img-caption">Gambar 1: Form penerimaan barang dalam status baru dengan pemilihan supplier</span>
+            <img src="/images/pembelian/cashflow_penerimaan_langkah_1.png" alt="Form Penerimaan Barang dan Menu Ambil Pesanan Pembelian" />
+            <span className="img-caption">Gambar 1: Form penerimaan barang dengan highlight data header (1) dan tombol Ambil ➔ Pesanan Pembelian (2)</span>
           </div>
         </div>
 
         <div className="step-section">
-          <h3>2. Klik tombol "Ambil" ➔ Pilih "Pesanan"</h3>
-          <p>Pada bar navigasi formulir di bagian kanan, klik tombol menu <strong>Ambil</strong> lalu klik pilihan <strong>Pesanan</strong>.</p>
+          <h3>3. Pilih Nomor Transaksi PO dan Klik Lanjut</h3>
+          <p>Pada modal pop-up yang muncul, pilih nomor PO yang sesuai (1), periksa rincian barang, kemudian klik tombol <strong>Lanjut</strong> (2).</p>
           <div className="img-wrapper">
-            <img src="/assets/step2-ambil-dari-po.png" alt="Opsi Ambil Pesanan Pembelian" />
-            <span className="img-caption">Gambar 2: Mengambil data barang yang masuk dari nomor PO yang sudah ada</span>
-          </div>
-        </div>
-
-        <div className="step-section">
-          <h3>3. Pilih Nomor Transaksi PO dan Barang</h3>
-          <p>Pilih nomor formulir PO yang akan diterima barangnya, centang daftar barang yang diterima fisik di gudang, lalu klik <strong>Lanjut</strong>.</p>
-          <div className="img-wrapper">
-            <img src="/assets/step2-salin-pesanan-modal.png" alt="Modal Salin Pesanan Pembelian" />
-            <span className="img-caption">Gambar 3: Modal pemilihan daftar nomor pesanan pembelian dan konfirmasi rincian barang</span>
+            <img src="/images/pembelian/cashflow_penerimaan_langkah_2.png" alt="Modal Salin Pesanan Pembelian dan Tombol Lanjut" />
+            <span className="img-caption">Gambar 2: Modal pemilihan nomor PO (1) dan konfirmasi tombol Lanjut (2)</span>
           </div>
         </div>
 

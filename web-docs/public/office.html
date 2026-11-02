@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valkyrie AI - Virtual Pixel Office</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background: #0f172a;
+      color: #f8fafc;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #1e293b;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+      z-index: 10;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: #064e3b;
+      color: #34d399;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .main-workspace {
+      flex: 1;
+      display: flex;
+      position: relative;
+    }
+    #office-canvas {
+      flex: 1;
+      background: #1e1b4b;
+      cursor: crosshair;
+      image-rendering: pixelated;
+    }
+    .sidebar-panel {
+      width: 380px;
+      background: #1e293b;
+      border-left: 1px solid #334155;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel-header {
+      padding: 16px;
+      border-bottom: 1px solid #334155;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .agent-card-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .agent-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .agent-card:hover, .agent-card.active {
+      border-color: #38bdf8;
+      background: #1e293b;
+    }
+    .agent-card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .avatar-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .agent-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .agent-role {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .agent-status-tag {
+      margin-left: auto;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .status-working { background: #0284c7; color: #e0f2fe; }
+    .status-idle { background: #334155; color: #cbd5e1; }
+    .status-reading { background: #7c3aed; color: #ede9fe; }
+    
+    .agent-current-task {
+      font-size: 12px;
+      color: #cbd5e1;
+      background: #182234;
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin-top: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .terminal-drawer {
+      height: 220px;
+      background: #090d16;
+      border-top: 1px solid #334155;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+    }
+    .terminal-title {
+      color: #94a3b8;
+      font-size: 11px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .terminal-body {
+      flex: 1;
+      overflow-y: auto;
+      color: #38bdf8;
+      line-height: 1.5;
+    }
+    .terminal-line { margin-bottom: 4px; }
+    .terminal-time { color: #64748b; margin-right: 8px; }
+
+    .control-actions {
+      padding: 12px 16px;
+      border-top: 1px solid #334155;
+      display: flex;
+      gap: 8px;
+    }
+    .btn {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary { background: #0284c7; color: #fff; }
+    .btn-primary:hover { background: #0369a1; }
+    .btn-secondary { background: #334155; color: #f8fafc; }
+    .btn-secondary:hover { background: #475569; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <span style="font-size: 22px;">🏢</span>
+      <div>
+        <h1 style="font-size: 16px; font-weight: 700; letter-spacing: 0.5px;">VALKYRIE PIXEL OFFICE</h1>
+        <p style="font-size: 11px; color: #94a3b8;">Autonomous AI Team Virtual Environment</p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        <span>ALL AGENTS CONNECTED</span>
+      </div>
+      <button class="btn btn-secondary" onclick="triggerRandomAction()" style="flex: none;">Random Task Event</button>
+    </div>
+  </header>
+
+  <div class="main-workspace">
+    <canvas id="office-canvas"></canvas>
+
+    <div class="sidebar-panel">
+      <div class="panel-header">
+        <span>ACTIVE WORKFORCE (4)</span>
+        <span style="font-size: 11px; color: #94a3b8;">Click Agent to Follow</span>
+      </div>
+
+      <div class="agent-card-list" id="agent-cards-container"></div>
+
+      <div class="terminal-drawer">
+        <div class="terminal-title">
+          <span>LIVE AGENT ACTIVITY LOG</span>
+          <span id="log-status">FEED: STREAMING</span>
+        </div>
+        <div class="terminal-body" id="terminal-logs"></div>
+      </div>
+
+      <div class="control-actions">
+        <button class="btn btn-primary" onclick="dispatchAllAgents()">⚡ Sync All Tasks</button>
+        <button class="btn btn-secondary" onclick="sendBreakTime()">☕ Coffee Break</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('office-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Agents dataset
+    const agents = [
+      {
+        id: 'valkyrie',
+        name: 'Valkyrie-Core',
+        role: 'Orchestrator & Lead',
+        avatarBg: '#0284c7',
+        avatarTxt: '👑',
+        x: 180,
+        y: 160,
+        deskX: 180,
+        deskY: 160,
+        targetX: 180,
+        targetY: 160,
+        state: 'working',
+        task: 'System Oversight & Memory Routing',
+        color: '#38bdf8',
+        bubble: 'Reviewing session memory...'
+      },
+      {
+        id: 'frontend',
+        name: 'PixelDev',
+        role: 'Frontend UI Engineer',
+        avatarBg: '#10b981',
+        avatarTxt: '💻',
+        x: 440,
+        y: 160,
+        deskX: 440,
+        deskY: 160,
+        targetX: 440,
+        targetY: 160,
+        state: 'working',
+        task: 'Styling CashFlow Responsive Navbar',
+        color: '#4ade80',
+        bubble: 'npm run build [success]'
+      },
+      {
+        id: 'writer',
+        name: 'DocBot',
+        role: 'Technical Writer',
+        avatarBg: '#8b5cf6',
+        avatarTxt: '📝',
+        x: 180,
+        y: 380,
+        deskX: 180,
+        deskY: 380,
+        targetX: 180,
+        targetY: 380,
+        state: 'reading',
+        task: 'Drafting PO Invoice Manual Steps',
+        color: '#c084fc',
+        bubble: 'Indexing help.accurate.id...'
+      },
+      {
+        id: 'security',
+        name: 'HexHunter',
+        role: 'QA & Security Auditor',
+        avatarBg: '#f43f5e',
+        avatarTxt: '🛡️',
+        x: 440,
+        y: 380,
+        deskX: 440,
+        deskY: 380,
+        targetX: 440,
+        targetY: 380,
+        state: 'idle',
+        task: 'Port 5173 Penetration Scan',
+        color: '#fb7185',
+        bubble: 'Zero vulnerabilities found'
+      }
+    ];
+
+    let selectedAgentId = 'valkyrie';
+    let logs = [];
+
+    function addLog(agentName, text) {
+      const time = new Date().toLocaleTimeString('id-ID');
+      logs.unshift({ time, agentName, text });
+      if (logs.length > 25) logs.pop();
+      renderLogs();
+    }
+
+    function renderLogs() {
+      const container = document.getElementById('terminal-logs');
+      container.innerHTML = logs.map(l => `
+        <div class="terminal-line">
+          <span class="terminal-time">[${l.time}]</span>
+          <strong style="color: #f1f5f9;">${l.agentName}:</strong> ${l.text}
+        </div>
+      `).join('');
+    }
+
+    function renderCards() {
+      const container = document.getElementById('agent-cards-container');
+      container.innerHTML = agents.map(a => `
+        <div class="agent-card ${a.id === selectedAgentId ? 'active' : ''}" onclick="selectAgent('${a.id}')">
+          <div class="agent-card-top">
+            <div class="avatar-icon" style="background: ${a.avatarBg}">${a.avatarTxt}</div>
+            <div>
+              <div class="agent-name">${a.name}</div>
+              <div class="agent-role">${a.role}</div>
+            </div>
+            <span class="agent-status-tag status-${a.state}">${a.state.toUpperCase()}</span>
+          </div>
+          <div class="agent-current-task">🎯 ${a.task}</div>
+        </div>
+      `).join('');
+    }
+
+    function selectAgent(id) {
+      selectedAgentId = id;
+      renderCards();
+      const a = agents.find(ag => ag.id === id);
+      addLog('OFFICE', `Fokus kamera diarahkan ke ${a.name}`);
+    }
+
+    // Resize Canvas
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth - 380;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Office Tile Grid & Props
+    function drawOfficeFloor() {
+      const tileSize = 40;
+      const cols = Math.ceil(canvas.width / tileSize);
+      const rows = Math.ceil(canvas.height / tileSize);
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const isEven = (r + c) % 2 === 0;
+          ctx.fillStyle = isEven ? '#1e293b' : '#1a2234';
+          ctx.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
+        }
+      }
+
+      // Walls / Rugs / Meeting Area
+      // Lounge Rug (Kanan)
+      ctx.fillStyle = '#064e3b';
+      ctx.fillRect(canvas.width - 240, 60, 180, 240);
+      ctx.fillStyle = '#047857';
+      ctx.fillRect(canvas.width - 230, 70, 160, 220);
+
+      // Water Cooler / Coffee Station
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillRect(canvas.width - 160, 90, 30, 40);
+      ctx.fillStyle = '#0284c7';
+      ctx.fillRect(canvas.width - 155, 130, 20, 25);
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = '11px sans-serif';
+      ctx.fillText('☕ COFFEE', canvas.width - 170, 80);
+
+      // Desks
+      agents.forEach(a => {
+        // Wooden desk
+        ctx.fillStyle = '#78350f';
+        ctx.fillRect(a.deskX - 35, a.deskY - 30, 70, 45);
+        ctx.fillStyle = '#92400e';
+        ctx.fillRect(a.deskX - 32, a.deskY - 27, 64, 39);
+
+        // Laptop / Monitor
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(a.deskX - 16, a.deskY - 22, 32, 20);
+        ctx.fillStyle = a.state === 'working' ? '#38bdf8' : (a.state === 'reading' ? '#c084fc' : '#475569');
+        ctx.fillRect(a.deskX - 14, a.deskY - 20, 28, 16);
+
+        // Chair
+        ctx.fillStyle = '#334155';
+        ctx.beginPath();
+        ctx.arc(a.deskX, a.deskY + 25, 14, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    // Agent Animation Loop
+    let tick = 0;
+    function drawAgents() {
+      tick++;
+
+      agents.forEach(a => {
+        // Move towards target
+        const dx = a.targetX - a.x;
+        const dy = a.targetY - a.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist > 2) {
+          a.x += (dx / dist) * 1.5;
+          a.y += (dy / dist) * 1.5;
+        }
+
+        // Selected halo
+        if (a.id === selectedAgentId) {
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(a.x, a.y + 10, 26 + Math.sin(tick * 0.1) * 3, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        // Draw Pixel Character Body
+        const bob = Math.sin(tick * 0.15 + a.x) * 2;
+
+        // Shadow
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        ctx.beginPath();
+        ctx.ellipse(a.x, a.y + 26, 16, 8, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Torso / Shirt
+        ctx.fillStyle = a.color;
+        ctx.fillRect(a.x - 12, a.y + bob, 24, 22);
+
+        // Head
+        ctx.fillStyle = '#fed7aa'; // skin
+        ctx.fillRect(a.x - 10, a.y - 18 + bob, 20, 18);
+
+        // Eyes (Pixel blinking)
+        const blinking = tick % 120 < 6;
+        ctx.fillStyle = '#1e293b';
+        if (!blinking) {
+          ctx.fillRect(a.x - 6, a.y - 10 + bob, 3, 4);
+          ctx.fillRect(a.x + 3, a.y - 10 + bob, 3, 4);
+        } else {
+          ctx.fillRect(a.x - 6, a.y - 8 + bob, 3, 1);
+          ctx.fillRect(a.x + 3, a.y - 8 + bob, 3, 1);
+        }
+
+        // Hair / Hat
+        ctx.fillStyle = a.avatarBg;
+        ctx.fillRect(a.x - 12, a.y - 22 + bob, 24, 6);
+
+        // Typing Hands animation if working at desk
+        if (a.state === 'working' && dist <= 2) {
+          const handBob = Math.sin(tick * 0.4) * 3;
+          ctx.fillStyle = '#fed7aa';
+          ctx.fillRect(a.x - 8, a.y - 2 + handBob, 4, 4);
+          ctx.fillRect(a.x + 4, a.y - 2 - handBob, 4, 4);
+        }
+
+        // Label Tag
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(a.name, a.x, a.y + 38);
+
+        // Speech Bubble
+        if (a.bubble) {
+          const bubbleW = ctx.measureText(a.bubble).width + 16;
+          const bubbleH = 22;
+          const bx = a.x - bubbleW / 2;
+          const by = a.y - 48 + bob;
+
+          ctx.fillStyle = '#0f172a';
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.roundRect(bx, by, bubbleW, bubbleH, 6);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#38bdf8';
+          ctx.font = '10px monospace';
+          ctx.fillText(a.bubble, a.x, by + 15);
+        }
+      });
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawOfficeFloor();
+      drawAgents();
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // Interactivity
+    function triggerRandomAction() {
+      const idx = Math.floor(Math.random() * agents.length);
+      const a = agents[idx];
+      const states = ['working', 'reading', 'idle'];
+      a.state = states[Math.floor(Math.random() * states.length)];
+
+      const phrases = [
+        'Running patch on Sidebar.tsx',
+        'Validating TypeScript schemas...',
+        'Compiling Vite web-docs bundle...',
+        'Inspecting HTTP response headers',
+        'Syncing Git commits to origin/main'
+      ];
+      a.bubble = phrases[Math.floor(Math.random() * phrases.length)];
+      addLog(a.name, a.bubble);
+      renderCards();
+    }
+
+    function sendBreakTime() {
+      agents.forEach((a, i) => {
+        a.state = 'idle';
+        a.targetX = canvas.width - 200 + (i % 2) * 45;
+        a.targetY = 120 + Math.floor(i / 2) * 55;
+        a.bubble = '☕ Coffee time...';
+      });
+      addLog('SYSTEM', 'Semua agent beralih ke area pantry / coffee break.');
+      renderCards();
+    }
+
+    function dispatchAllAgents() {
+      agents.forEach(a => {
+        a.state = 'working';
+        a.targetX = a.deskX;
+        a.targetY = a.deskY;
+        a.bubble = '💻 On task: ' + a.task.slice(0, 20) + '...';
+      });
+      addLog('SYSTEM', 'Semua agent kembali ke meja kerja masing-masing.');
+      renderCards();
+    }
+
+    // Initial population
+    addLog('SYSTEM', 'Pixel Office initialized. 4 Virtual AI agents spawned.');
+    addLog('Valkyrie-Core', 'Active session listener on port 20128 ready.');
+    renderCards();
+  </script>
+</body>
+</html>

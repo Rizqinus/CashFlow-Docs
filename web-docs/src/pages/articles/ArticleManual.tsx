@@ -49,26 +49,26 @@ export const ArticleManual: React.FC<ArticleProps> = ({ onBackToIndex, onNextArt
           <h3>1. Buka formulir Penerimaan Barang</h3>
           <p>Masuk ke menu navigasi <strong>Pembelian</strong> ➔ klik sub-menu <strong>Penerimaan Barang</strong>.</p>
           <div className="img-wrapper">
-            <img src="/assets/step1-menu-pembelian.png" alt="Menu Pembelian CashFlow" />
-            <span className="img-caption">Gambar 1: Mengakses menu Pembelian di sidebar aplikasi CashFlow Online</span>
+            <img src="/images/pembelian/cashflow_manual_langkah_1.png" alt="Menu Pembelian CashFlow" />
+            <span className="img-caption">Gambar 1: Mengakses modul Pembelian dan membuka fitur Penerimaan Pesanan (1)</span>
           </div>
         </div>
 
         <div className="step-section">
-          <h3>2. Isi informasi Supplier dan Tanggal Terima</h3>
-          <p>Pilih nama pemasok pada kolom <strong>Pemasok</strong>, masukkan tanggal barang diterima fisik di gudang, dan isi nomor surat jalan pengiriman dari pemasok pada kolom <strong>No. Terima</strong>.</p>
+          <h3>2. Isi informasi Supplier dan Cari Barang</h3>
+          <p>Pilih nama pemasok pada kolom <strong>Supplier</strong> (1), tentukan tanggal terima, lalu pada kolom <strong>Scan / Cari Barang</strong> pilih item barang fisik yang masuk (2).</p>
           <div className="img-wrapper">
-            <img src="/assets/step1-cari-barang.png" alt="Form Penerimaan Barang Baru" />
-            <span className="img-caption">Gambar 2: Mengisi data header formulir penerimaan barang baru</span>
+            <img src="/images/pembelian/cashflow_manual_langkah_2.png" alt="Form Penerimaan Barang Baru" />
+            <span className="img-caption">Gambar 2: Mengisi header dokumen (1) dan memilih item barang pada kolom pencarian (2)</span>
           </div>
         </div>
 
         <div className="step-section">
-          <h3>3. Pilih atau Tambah Barang yang Diterima</h3>
-          <p>Ketik nama barang pada kolom pencarian barang atau klik tombol <em>+ Tambah</em> jika barang belum terdaftar di sistem.</p>
+          <h3>3. Tentukan Kuantitas dan Tambahkan Barang</h3>
+          <p>Pada modal pop-up yang muncul, tentukan kuantitas barang yang diterima secara fisik, lalu klik tombol <strong>Tambahkan</strong>.</p>
           <div className="img-wrapper">
-            <img src="/assets/step1-tambah-barang-modal.png" alt="Modal Tambah Barang" />
-            <span className="img-caption">Gambar 3: Form popup tambah item barang baru langsung dari transaksi</span>
+            <img src="/images/pembelian/cashflow_manual_langkah_3.png" alt="Modal Tambah Barang" />
+            <span className="img-caption">Gambar 3: Memeriksa kuantitas/harga barang dan mengonfirmasi tombol Tambahkan</span>
           </div>
         </div>
 

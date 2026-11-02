@@ -12,6 +12,7 @@ interface ArticleProps {
     title: string;
     desc: string;
     screenshotNote: string;
+    image?: string;
   }[];
 }
 
@@ -64,26 +65,42 @@ export const ArticleTemplate: React.FC<ArticleProps> = ({
               </div>
               <p className="step-description">{step.desc}</p>
 
-              {/* Browser Capture Mockup / Placeholder Aset */}
-              <div className="capture-placeholder-frame">
-                <div className="capture-header-bar">
-                  <div className="window-dots">
-                    <span className="dot red"></span>
-                    <span className="dot yellow"></span>
-                    <span className="dot green"></span>
+              {/* Browser Capture Mockup / Real Image */}
+              {step.image ? (
+                <div className="capture-image-frame" style={{ marginTop: '14px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #cbd5e1', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.08)' }}>
+                  <div className="capture-header-bar">
+                    <div className="window-dots">
+                      <span className="dot red"></span>
+                      <span className="dot yellow"></span>
+                      <span className="dot green"></span>
+                    </div>
+                    <div className="browser-address-pill">
+                      appcashflow.id/{category.toLowerCase().replace(/\s+/g, '-')}
+                    </div>
                   </div>
-                  <div className="browser-address-pill">
-                    appcashflow.id/{category.toLowerCase().replace(/\s+/g, '-')}
+                  <img src={step.image} alt={step.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                </div>
+              ) : (
+                <div className="capture-placeholder-frame">
+                  <div className="capture-header-bar">
+                    <div className="window-dots">
+                      <span className="dot red"></span>
+                      <span className="dot yellow"></span>
+                      <span className="dot green"></span>
+                    </div>
+                    <div className="browser-address-pill">
+                      appcashflow.id/{category.toLowerCase().replace(/\s+/g, '-')}
+                    </div>
+                  </div>
+                  <div className="capture-body-content">
+                    <Camera size={32} className="camera-icon-muted" />
+                    <span className="capture-label">Area Tangkapan Layar: {step.title}</span>
+                    <span className="capture-sublabel">
+                      Aset visual: {step.screenshotNote}
+                    </span>
                   </div>
                 </div>
-                <div className="capture-body-content">
-                  <Camera size={32} className="camera-icon-muted" />
-                  <span className="capture-label">Area Tangkapan Layar: {step.title}</span>
-                  <span className="capture-sublabel">
-                    Aset visual: {step.screenshotNote}
-                  </span>
-                </div>
-              </div>
+              )}
             </div>
           ))}
         </div>

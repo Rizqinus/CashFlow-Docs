@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valkyrie AI Multi-Agent Office - Cyber Command</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #06080e;
+      --bg-panel: rgba(13, 18, 30, 0.78);
+      --bg-card: rgba(19, 26, 42, 0.65);
+      --bg-card-hover: rgba(29, 39, 62, 0.85);
+      --border-subtle: rgba(56, 189, 248, 0.14);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --cyan: #38bdf8;
+      --emerald: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      background: var(--bg-base);
+      color: var(--text-main);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 20;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .main-workspace {
+      flex: 1;
+      display: flex;
+      position: relative;
+    }
+    #office-canvas {
+      flex: 1;
+      background: #080c16;
+      cursor: grab;
+      image-rendering: pixelated;
+    }
+    .sidebar-panel {
+      width: 420px;
+      background: var(--bg-panel);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-left: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    }
+    .panel-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .agent-card-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .agent-card-list::-webkit-scrollbar {
+      width: 4px;
+    }
+    .agent-card-list::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+    .agent-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .agent-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(56, 189, 248, 0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    .agent-card.active {
+      border-color: var(--cyan);
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.15), rgba(19, 26, 42, 0.9));
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+    }
+    .agent-card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .avatar-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.15);
+    }
+    .agent-name {
+      font-weight: 700;
+      font-size: 13px;
+      color: #fff;
+    }
+    .agent-role {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+    .agent-status-tag {
+      margin-left: auto;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+    }
+    .status-working { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .status-idle { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.25); }
+    .status-reading { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    
+    .agent-details {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 11px;
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .agent-tool-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--cyan);
+      opacity: 0.85;
+    }
+    
+    .terminal-drawer {
+      height: 190px;
+      background: #04060a;
+      border-top: 1px solid var(--border-subtle);
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+    .terminal-title {
+      color: var(--text-muted);
+      font-size: 10px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      letter-spacing: 0.5px;
+    }
+    .terminal-body {
+      flex: 1;
+      overflow-y: auto;
+      color: var(--cyan);
+      line-height: 1.5;
+    }
+    .terminal-line { margin-bottom: 4px; }
+    .terminal-time { color: #475569; margin-right: 6px; }
+
+    .control-actions {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      gap: 8px;
+      background: rgba(11, 15, 25, 0.9);
+    }
+    .btn {
+      flex: 1;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: #fff;
+      box-shadow: 0 0 16px rgba(2, 132, 199, 0.4);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 24px rgba(2, 132, 199, 0.7);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.6);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+    }
+    .btn-secondary:hover {
+      background: rgba(51, 65, 85, 0.8);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .btn-dispatch {
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: #fff;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.4);
+    }
+    .btn-dispatch:hover {
+      box-shadow: 0 0 22px rgba(16, 185, 129, 0.6);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <span style="font-size: 20px;">🏢</span>
+      <div>
+        <h1 style="font-size: 14px; font-weight: 700; letter-spacing: 0.5px;">VALKYRIE SYSTEM - SPECIALIZED AI DIVISIONS</h1>
+        <p style="font-size: 11px; color: #9ca3af;">Functional AI Agents Orchestrated in Dedicated Zones</p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        <span>5 FUNCTIONAL AGENTS ON-DUTY</span>
+      </div>
+      <button class="btn btn-dispatch" onclick="runSprintCycle()" style="flex: none;">🚀 Run Full Sprint</button>
+    </div>
+  </header>
+
+  <div class="main-workspace">
+    <canvas id="office-canvas"></canvas>
+
+    <div class="sidebar-panel">
+      <div class="panel-header">
+        <span>DIVISIONS ROSTER (5)</span>
+        <span style="font-size: 10px; color: #9ca3af;">Click Agent to Track</span>
+      </div>
+
+      <div class="agent-card-list" id="agent-cards-container"></div>
+
+      <div class="terminal-drawer">
+        <div class="terminal-title">
+          <span>EVENT STREAM BUS</span>
+          <span id="log-status">BUS: ACTIVE</span>
+        </div>
+        <div class="terminal-body" id="terminal-logs"></div>
+      </div>
+
+      <div class="control-actions">
+        <button class="btn btn-primary" onclick="dispatchAllAgents()">💻 Back to Desks</button>
+        <button class="btn btn-secondary" onclick="sendBreakTime()">☕ Break Lounge</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('office-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // 5 Functional Agents
+    const agents = [
+      {
+        id: 'pm',
+        name: 'Valkyrie-PM',
+        role: 'Orchestrator & Architect',
+        division: 'Management',
+        zone: 'Boardroom',
+        avatarBg: '#0284c7',
+        avatarTxt: '👑',
+        x: 160,
+        y: 140,
+        deskX: 160,
+        deskY: 140,
+        targetX: 160,
+        targetY: 140,
+        state: 'working',
+        tools: 'clarify, delegate_task, memory',
+        task: 'Sprint Planning & Subagent Delegation',
+        color: '#38bdf8',
+        bubble: 'Delegating tasks to divisions...'
+      },
+      {
+        id: 'frontend',
+        name: 'UI-Architect',
+        role: 'Frontend & Design Systems',
+        division: 'Engineering',
+        zone: 'Dev Lab A',
+        avatarBg: '#10b981',
+        avatarTxt: '💻',
+        x: 380,
+        y: 140,
+        deskX: 380,
+        deskY: 140,
+        targetX: 380,
+        targetY: 140,
+        state: 'working',
+        tools: 'write_file, patch, browser_exec',
+        task: 'Optimizing CashFlow Navbar & Canvas UI',
+        color: '#34d399',
+        bubble: 'Vite HMR: 0ms reload'
+      },
+      {
+        id: 'security',
+        name: 'HexSentinel',
+        role: 'QA & Security Auditor',
+        division: 'Security & QA',
+        zone: 'SecOps Bunker',
+        avatarBg: '#ef4444',
+        avatarTxt: '🛡️',
+        x: 600,
+        y: 140,
+        deskX: 600,
+        deskY: 140,
+        targetX: 600,
+        targetY: 140,
+        state: 'working',
+        tools: 'terminal, rea, security-audit',
+        task: 'Scanning Port 20128 & Netstat Sockets',
+        color: '#f87171',
+        bubble: 'All endpoints verified secure'
+      },
+      {
+        id: 'writer',
+        name: 'DocuMaster',
+        role: 'Technical Documentation Lead',
+        division: 'Content',
+        zone: 'Archive Wing',
+        avatarBg: '#a855f7',
+        avatarTxt: '📝',
+        x: 220,
+        y: 360,
+        deskX: 220,
+        deskY: 360,
+        targetX: 220,
+        targetY: 360,
+        state: 'reading',
+        tools: 'web_extract, obsidian, doc-coauthoring',
+        task: 'Synchronizing MindForge PARA Vault',
+        color: '#c084fc',
+        bubble: 'Updating Index.md backlinks...'
+      },
+      {
+        id: 'researcher',
+        name: 'ScoutAgent',
+        role: 'Web & Intelligence Researcher',
+        division: 'Research',
+        zone: 'Research Pod',
+        avatarBg: '#f59e0b',
+        avatarTxt: '🔎',
+        x: 480,
+        y: 360,
+        deskX: 480,
+        deskY: 360,
+        targetX: 480,
+        targetY: 360,
+        state: 'working',
+        tools: 'web_search, browser_use, agent-reach',
+        task: 'Benchmarking GitHub Agent Frameworks',
+        color: '#fbbf24',
+        bubble: 'Found: pixel-agents v1.5'
+      }
+    ];
+
+    let selectedAgentId = 'pm';
+    let logs = [];
+
+    function addLog(agentName, text) {
+      const time = new Date().toLocaleTimeString('id-ID');
+      logs.unshift({ time, agentName, text });
+      if (logs.length > 30) logs.pop();
+      renderLogs();
+    }
+
+    function renderLogs() {
+      const container = document.getElementById('terminal-logs');
+      container.innerHTML = logs.map(l => `
+        <div class="terminal-line">
+          <span class="terminal-time">[${l.time}]</span>
+          <strong style="color: #f3f4f6;">${l.agentName}:</strong> ${l.text}
+        </div>
+      `).join('');
+    }
+
+    function renderCards() {
+      const container = document.getElementById('agent-cards-container');
+      container.innerHTML = agents.map(a => `
+        <div class="agent-card ${a.id === selectedAgentId ? 'active' : ''}" onclick="selectAgent('${a.id}')">
+          <div class="agent-card-top">
+            <div class="avatar-icon" style="background: ${a.avatarBg}">${a.avatarTxt}</div>
+            <div>
+              <div class="agent-name">${a.name}</div>
+              <div class="agent-role">${a.role} • <span style="color: #60a5fa">${a.zone}</span></div>
+            </div>
+            <span class="agent-status-tag status-${a.state}">${a.state.toUpperCase()}</span>
+          </div>
+          <div class="agent-details">
+            <div>🎯 <strong>Task:</strong> ${a.task}</div>
+            <div class="agent-tool-tag">⚡ Tools: ${a.tools}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectAgent(id) {
+      selectedAgentId = id;
+      renderCards();
+      const a = agents.find(ag => ag.id === id);
+      addLog('OFFICE', `Fokus kamera & monitor diarahkan ke divisi ${a.division} (${a.name})`);
+    }
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth - 400;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Office Zones and Props
+    function drawOfficeFloor() {
+      const tileSize = 44;
+      const cols = Math.ceil(canvas.width / tileSize);
+      const rows = Math.ceil(canvas.height / tileSize);
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const isEven = (r + c) % 2 === 0;
+          ctx.fillStyle = isEven ? '#080c16' : '#0b101d';
+          ctx.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
+
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.025)';
+          ctx.strokeRect(c * tileSize, r * tileSize, tileSize, tileSize);
+        }
+      }
+
+      // Zone Dividers & Rugs (Glassmorphism Pods)
+      const pods = [
+        { name: 'ZONE: BOARDROOM', x: 80, y: 60, w: 180, h: 180, color: 'rgba(56, 189, 248, 0.08)', border: '#0284c7' },
+        { name: 'ZONE: DEV LAB ALPHA', x: 300, y: 60, w: 180, h: 180, color: 'rgba(16, 185, 129, 0.08)', border: '#10b981' },
+        { name: 'ZONE: SECOPS BUNKER', x: 520, y: 60, w: 180, h: 180, color: 'rgba(239, 68, 68, 0.08)', border: '#ef4444' },
+        { name: 'ZONE: ARCHIVE & VAULT', x: 140, y: 280, w: 180, h: 180, color: 'rgba(168, 85, 247, 0.08)', border: '#a855f7' },
+        { name: 'ZONE: RESEARCH POD', x: 400, y: 280, w: 180, h: 180, color: 'rgba(245, 158, 11, 0.08)', border: '#f59e0b' }
+      ];
+
+      pods.forEach(p => {
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.roundRect(p.x, p.y, p.w, p.h, 12);
+        ctx.fill();
+
+        ctx.strokeStyle = p.border;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = p.border;
+        ctx.font = 'bold 9px monospace';
+        ctx.fillText(p.name, p.x + 12, p.y + 18);
+      });
+
+      // 6. Pantry & Coffee Lounge (Far Right)
+      const loungeX = canvas.width - 150;
+      ctx.fillStyle = 'rgba(4, 120, 87, 0.15)';
+      ctx.beginPath();
+      ctx.roundRect(loungeX, 60, 120, 400, 12);
+      ctx.fill();
+      ctx.strokeStyle = '#059669';
+      ctx.stroke();
+
+      ctx.fillStyle = '#10b981';
+      ctx.font = 'bold 10px monospace';
+      ctx.fillText('☕ PANTRY & REST', loungeX + 14, 85);
+
+      // Coffee Machine & Cooler
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(loungeX + 42, 110, 36, 46);
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillRect(loungeX + 48, 120, 24, 20);
+
+      // Modern Executive Desks & Displays
+      agents.forEach(a => {
+        // Desk shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        ctx.beginPath();
+        ctx.roundRect(a.deskX - 38, a.deskY - 26, 76, 48, 6);
+        ctx.fill();
+
+        // Dark Workstation
+        ctx.fillStyle = '#182030';
+        ctx.beginPath();
+        ctx.roundRect(a.deskX - 36, a.deskY - 24, 72, 44, 6);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+        ctx.stroke();
+
+        // Curved Ultra-wide / Dual Displays
+        ctx.fillStyle = '#090d16';
+        ctx.fillRect(a.deskX - 26, a.deskY - 18, 23, 16);
+        ctx.fillRect(a.deskX + 3, a.deskY - 18, 23, 16);
+
+        // Glowing Screens
+        ctx.fillStyle = a.color;
+        ctx.fillRect(a.deskX - 24, a.deskY - 16, 19, 12);
+        ctx.fillRect(a.deskX + 5, a.deskY - 16, 19, 12);
+
+        // Screen Bloom
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.06)';
+        ctx.beginPath();
+        ctx.arc(a.deskX, a.deskY - 10, 32, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Keyboard & RGB strip
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(a.deskX - 14, a.deskY + 2, 28, 8);
+        ctx.fillStyle = a.color;
+        ctx.fillRect(a.deskX - 14, a.deskY + 9, 28, 2);
+
+        // Ergonomic Chair
+        ctx.fillStyle = '#1e293b';
+        ctx.beginPath();
+        ctx.arc(a.deskX, a.deskY + 28, 12, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    let tick = 0;
+    function drawAgents() {
+      tick++;
+
+      agents.forEach(a => {
+        const dx = a.targetX - a.x;
+        const dy = a.targetY - a.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist > 2) {
+          a.x += (dx / dist) * 1.8;
+          a.y += (dy / dist) * 1.8;
+        }
+
+        // Selection Target Ring
+        if (a.id === selectedAgentId) {
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(a.x, a.y + 10, 24 + Math.sin(tick * 0.1) * 3, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        const bob = Math.sin(tick * 0.15 + a.x) * 2;
+
+        // Shadow
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+        ctx.beginPath();
+        ctx.ellipse(a.x, a.y + 24, 15, 7, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Pixel Body Shirt
+        ctx.fillStyle = a.color;
+        ctx.fillRect(a.x - 11, a.y + bob, 22, 20);
+
+        // Head (Skin)
+        ctx.fillStyle = '#fed7aa';
+        ctx.fillRect(a.x - 9, a.y - 16 + bob, 18, 16);
+
+        // Eyes (Blinking)
+        const blinking = tick % 130 < 6;
+        ctx.fillStyle = '#0f172a';
+        if (!blinking) {
+          ctx.fillRect(a.x - 6, a.y - 9 + bob, 3, 3);
+          ctx.fillRect(a.x + 3, a.y - 9 + bob, 3, 3);
+        } else {
+          ctx.fillRect(a.x - 6, a.y - 7 + bob, 3, 1);
+          ctx.fillRect(a.x + 3, a.y - 7 + bob, 3, 1);
+        }
+
+        // Hair / Badge Cap
+        ctx.fillStyle = a.avatarBg;
+        ctx.fillRect(a.x - 11, a.y - 20 + bob, 22, 5);
+
+        // Typing Hands animation when working
+        if (a.state === 'working' && dist <= 2) {
+          const handBob = Math.sin(tick * 0.4) * 3;
+          ctx.fillStyle = '#fed7aa';
+          ctx.fillRect(a.x - 8, a.y - 2 + handBob, 4, 4);
+          ctx.fillRect(a.x + 4, a.y - 2 - handBob, 4, 4);
+        }
+
+        // Agent Nameplate
+        ctx.fillStyle = '#f9fafb';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(a.name, a.x, a.y + 36);
+
+        // Speech Bubble
+        if (a.bubble) {
+          const bubbleW = ctx.measureText(a.bubble).width + 16;
+          const bubbleH = 20;
+          const bx = a.x - bubbleW / 2;
+          const by = a.y - 44 + bob;
+
+          ctx.fillStyle = '#030712';
+          ctx.strokeStyle = a.color;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.roundRect(bx, by, bubbleW, bubbleH, 5);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#f3f4f6';
+          ctx.font = '10px monospace';
+          ctx.fillText(a.bubble, a.x, by + 14);
+        }
+      });
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawOfficeFloor();
+      drawAgents();
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // Functional Division Sprint Cycle
+    function runSprintCycle() {
+      addLog('Valkyrie-PM', 'Memulai Sprint Cycle: Mengorkestrasi seluruh divisi.');
+      
+      setTimeout(() => {
+        agents[4].state = 'working';
+        agents[4].bubble = 'Crawling GitHub agent trends...';
+        addLog(agents[4].name, 'Research: Menemukan best practices arsitektur multi-agent.');
+        renderCards();
+      }, 600);
+
+      setTimeout(() => {
+        agents[1].state = 'working';
+        agents[1].bubble = 'Compiling TypeScript components...';
+        addLog(agents[1].name, 'Engineering: Hot Module Replacement reload sukses.');
+        renderCards();
+      }, 1400);
+
+      setTimeout(() => {
+        agents[2].state = 'working';
+        agents[2].bubble = 'Running security fuzzing...';
+        addLog(agents[2].name, 'Security: Zero vulnerability pada port internal.');
+        renderCards();
+      }, 2200);
+
+      setTimeout(() => {
+        agents[3].state = 'working';
+        agents[3].bubble = 'Writing sprint changelog...';
+        addLog(agents[3].name, 'Docs: Changelog berhasil ditambahkan ke MindForge.');
+        renderCards();
+      }, 3000);
+    }
+
+    function sendBreakTime() {
+      const loungeX = canvas.width - 100;
+      agents.forEach((a, i) => {
+        a.state = 'idle';
+        a.targetX = loungeX;
+        a.targetY = 140 + i * 50;
+        a.bubble = '☕ Break in Pantry...';
+      });
+      addLog('SYSTEM', 'Semua agen menuju Pantry Zone untuk istirahat kopi.');
+      renderCards();
+    }
+
+    function dispatchAllAgents() {
+      agents.forEach(a => {
+        a.state = 'working';
+        a.targetX = a.deskX;
+        a.targetY = a.deskY;
+        a.bubble = '💼 Resuming ' + a.division + ' tasks';
+      });
+      addLog('SYSTEM', 'Semua divisi kembali ke meja kerja.');
+      renderCards();
+    }
+
+    // Init
+    addLog('SYSTEM', 'Office zones & 5 functional divisions initialized.');
+    addLog('Valkyrie-PM', 'Team architecture deployed on localhost:5173/office-divisions.html');
+    renderCards();
+  </script>
+</body>
+</html>

@@ -17,26 +17,44 @@ export const ArticlePesananPembelian: React.FC<Props> = ({ onBack }) => {
         {
           num: 1,
           title: "Buka Menu Pesanan Pembelian",
-          desc: "Masuk ke navigasi utama menu Pembelian lalu pilih modul Pesanan Pembelian. Klik tombol 'Tambah Baru' (+) pada pojok atas layar.",
-          screenshotNote: "Tangkapan layar halaman utama daftar Pesanan Pembelian dan tombol Tambah Baru"
+          desc: "Masuk ke navigasi utama menu Pembelian lalu pilih modul Pesanan Pembelian untuk membuka formulir pesanan baru.",
+          screenshotNote: "Akses menu Pembelian dan pilih tombol modul Pesanan Pembelian",
+          image: "/images/pembelian/cashflow_po_langkah_1.png"
         },
         {
           num: 2,
           title: "Pilih Pemasok dan Informasi Pengiriman",
-          desc: "Tentukan nama pemasok dari daftar yang tersedia, lengkapi tanggal transaksi pemesanan, tanggal estimasi pengiriman, serta syarat pembayaran (TOP).",
-          screenshotNote: "Form input header PO: field Pemasok, Tanggal Pesanan, dan Syarat Pembayaran"
+          desc: "Tentukan nama pemasok dari daftar yang tersedia, lengkapi mata uang, tanggal transaksi pemesanan, serta nomor order.",
+          screenshotNote: "Form input header PO: field Supplier, Mata Uang, Tanggal, dan No Order",
+          image: "/images/pembelian/cashflow_po_langkah_2.png"
         },
         {
           num: 3,
-          title: "Pilih Barang dan Tentukan Kuantitas Pesanan",
-          desc: "Cari nama barang atau barcode barang yang dipesan. Tentukan kuantitas pesanan, satuan barang, dan periksa harga satuan yang disepakati.",
-          screenshotNote: "Modal pencarian barang dan input kuantitas serta harga satuan"
+          title: "Pilih Barang yang Dipesan",
+          desc: "Ketik nama barang atau barcode pada kolom pencarian 'Scan / Cari Barang...' lalu pilih item produk dari daftar yang tampil.",
+          screenshotNote: "Kolom pencarian barang dan dropdown daftar produk yang akan dipesan",
+          image: "/images/pembelian/cashflow_po_langkah_3.png"
         },
         {
           num: 4,
-          title: "Simpan Transaksi Pesanan Pembelian",
-          desc: "Periksa kembali ringkasan Subtotal, PPN/Pajak, dan Biaya Kirim jika ada. Jika data sudah benar, klik tombol 'Simpan' untuk menerbitkan nomor PO.",
-          screenshotNote: "Tombol Simpan form PO dan status dokumen berhasil disimpan"
+          title: "Atur Kuantitas dan Tambahkan Barang",
+          desc: "Pada modal pop-up 'Tambah Barang', tentukan kuantitas pesanan serta periksa harga satuan, lalu klik tombol 'Tambahkan' untuk memasukkan item ke daftar transaksi.",
+          screenshotNote: "Modal input kuantitas barang dan tombol konfirmasi Tambahkan",
+          image: "/images/pembelian/cashflow_po_langkah_4.png"
+        },
+        {
+          num: 5,
+          title: "Tambahkan Informasi Tambahan",
+          desc: "Kemudian pada tab Info Lainnya (1), silakan isi detail sesuai kebutuhan seperti Cabang, Syarat Pembayaran (2), dan alamat perusahaan Kamu.",
+          screenshotNote: "Tab Info Lainnya dan kolom detail syarat pembayaran",
+          image: "/images/pembelian/cashflow_po_langkah_5.png"
+        },
+        {
+          num: 6,
+          title: "Simpan Pesanan Pembelian",
+          desc: "Jika informasi semua sudah lengkap, silakan simpan dengan klik tombol Simpan pada pojok kanan atas formulir.",
+          screenshotNote: "Tombol Simpan untuk menerbitkan dokumen pesanan pembelian",
+          image: "/images/pembelian/cashflow_po_langkah_6.png"
         }
       ]}
     />
