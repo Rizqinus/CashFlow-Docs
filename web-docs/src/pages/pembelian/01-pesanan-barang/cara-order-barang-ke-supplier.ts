@@ -1,19 +1,12 @@
-import React from 'react';
-import { ArticleTemplate } from './ArticleTemplate';
+import { ArticleData } from '../../../types/article';
 
-interface Props {
-  onBack: () => void;
-}
-
-export const ArticlePesananPembelian: React.FC<Props> = ({ onBack }) => {
-  return (
-    <ArticleTemplate
-      title="Cara Order Barang ke Supplier dan Mencatatnya di CashFlow Online"
-      category="Pesanan Pembelian"
-      readTime="3 Menit"
-      onBack={onBack}
-      summary="Pesanan Pembelian (Purchase Order / PO) adalah dokumen pemesanan formal yang dibuat untuk memesan barang/jasa kepada pemasok sebelum barang dikirim dan sebelum faktur diterbitkan."
-      steps={[
+export const caraOrderBarangKeSupplierData: ArticleData = {
+  id: 'cara-order-barang-ke-supplier',
+  title: "Cara Order Barang ke Supplier dan Mencatatnya di CashFlow Online",
+  category: "Pesanan Pembelian",
+  readTime: "3 Menit",
+  summary: "Pesanan Pembelian (Purchase Order / PO) adalah dokumen pemesanan formal yang dibuat untuk memesan barang/jasa kepada pemasok sebelum barang dikirim dan sebelum faktur diterbitkan.",
+  steps: [
         {
           num: 1,
           title: "Buka Menu Pesanan Pembelian",
@@ -56,7 +49,5 @@ export const ArticlePesananPembelian: React.FC<Props> = ({ onBack }) => {
           screenshotNote: "Tombol Simpan untuk menerbitkan dokumen pesanan pembelian",
           image: "/images/pembelian/cashflow_po_langkah_6.png"
         }
-      ]}
-    />
-  );
+      ]
 };

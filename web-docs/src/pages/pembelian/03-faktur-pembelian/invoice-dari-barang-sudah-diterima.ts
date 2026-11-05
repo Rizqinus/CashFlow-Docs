@@ -1,19 +1,12 @@
-import React from 'react';
-import { ArticleTemplate } from './ArticleTemplate';
+import { ArticleData } from '../../../types/article';
 
-interface Props {
-  onBack: () => void;
-}
-
-export const ArticleFakturDariPenerimaan: React.FC<Props> = ({ onBack }) => {
-  return (
-    <ArticleTemplate
-      title="Cara Membuat Faktur Pembelian Berasal dari Penerimaan Barang"
-      category="Faktur Pembelian"
-      readTime="3 Menit"
-      onBack={onBack}
-      summary="Barang sudah sampai di gudang dan sudah dicatat di formulir Penerimaan Barang? Begini cara membuat tagihan faktur pembelian langsung dari nomor tanda terima barang dengan cepat dan akurat."
-      steps={[
+export const invoiceDariBarangSudahDiterimaData: ArticleData = {
+  id: 'invoice-dari-barang-sudah-diterima',
+  title: "Cara Membuat Faktur Pembelian Berasal dari Penerimaan Barang",
+  category: "Faktur Pembelian",
+  readTime: "3 Menit",
+  summary: "Barang sudah sampai di gudang dan sudah dicatat di formulir Penerimaan Barang? Begini cara membuat tagihan faktur pembelian langsung dari nomor tanda terima barang dengan cepat dan akurat.",
+  steps: [
         {
           num: 1,
           title: "Buka Menu Faktur Pembelian",
@@ -38,7 +31,5 @@ export const ArticleFakturDariPenerimaan: React.FC<Props> = ({ onBack }) => {
           desc: "Klik tab Info Lainnya (i), isi kolom No. Faktur Pemasok, lalu klik tombol Simpan untuk memposting hutang usaha.",
           screenshotNote: "Tab Info Lainnya pengisian No. Faktur Pemasok dan tombol simpan"
         }
-      ]}
-    />
-  );
+      ]
 };
