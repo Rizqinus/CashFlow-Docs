@@ -1,19 +1,12 @@
-import React from 'react';
-import { ArticleTemplate } from './ArticleTemplate';
+import { ArticleData } from '../../../types/article';
 
-interface Props {
-  onBack: () => void;
-}
-
-export const ArticlePOBatal: React.FC<Props> = ({ onBack }) => {
-  return (
-    <ArticleTemplate
-      title="Cara Membatalkan Pesanan Barang ke Supplier"
-      category="Pesanan Pembelian"
-      readTime="2 Menit"
-      onBack={onBack}
-      summary="Jika pemasok kehabisan stok atau transaksi dibatalkan oleh kedua belah pihak, pesanan pembelian yang terlanjur dibuat dapat ditutup agar tidak menggantung di laporan antrean PO."
-      steps={[
+export const caraMembatalkanPesananData: ArticleData = {
+  id: 'cara-membatalkan-pesanan',
+  title: "Cara Membatalkan Pesanan Barang ke Supplier",
+  category: "Pesanan Pembelian",
+  readTime: "2 Menit",
+  summary: "Jika pemasok kehabisan stok atau transaksi dibatalkan oleh kedua belah pihak, pesanan pembelian yang terlanjur dibuat dapat ditutup agar tidak menggantung di laporan antrean PO.",
+  steps: [
         {
           num: 1,
           title: "Buka Daftar Pesanan Pembelian",
@@ -38,7 +31,5 @@ export const ArticlePOBatal: React.FC<Props> = ({ onBack }) => {
           desc: "Klik tombol Simpan. Dokumen PO akan otomatis berstatus 'Ditutup' dan tidak bisa ditarik ke Penerimaan Barang maupun Faktur.",
           screenshotNote: "Status PO berubah menjadi Ditutup dan tidak aktif"
         }
-      ]}
-    />
-  );
+      ]
 };
