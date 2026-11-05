@@ -1,12 +1,19 @@
-import { ArticleData } from '../../../types/article';
+import React from 'react';
+import { ArticleTemplate } from './ArticleTemplate';
 
-export const caraMencatatDpKeSupplierData: ArticleData = {
-  id: 'cara-mencatat-dp-ke-supplier',
-  title: "Cara Mencatat DP Barang ke Supplier",
-  category: "Pesanan Pembelian",
-  readTime: "3 Menit",
-  summary: "Pernah pesan barang ke pemasok dan diminta bayar DP (Uang Muka) dulu? Di CashFlow Online, kamu bisa catat uang muka pembelian yang didahului pesanan agar pembayaran awal langsung tersambung ke nomor PO tanpa input berulang.",
-  steps: [
+interface Props {
+  onBack: () => void;
+}
+
+export const ArticlePOUangMuka: React.FC<Props> = ({ onBack }) => {
+  return (
+    <ArticleTemplate
+      title="Cara Mencatat DP Barang ke Supplier"
+      category="Pesanan Pembelian"
+      readTime="3 Menit"
+      onBack={onBack}
+      summary="Pernah pesan barang ke pemasok dan diminta bayar DP (Uang Muka) dulu? Di CashFlow Online, kamu bisa catat uang muka pembelian yang didahului pesanan agar pembayaran awal langsung tersambung ke nomor PO tanpa input berulang."
+      steps={[
         {
           num: 1,
           title: "Buka Modul Pembelian dan Pilih Uang Muka Pembelian",
@@ -31,5 +38,7 @@ export const caraMencatatDpKeSupplierData: ArticleData = {
           desc: "Klik tombol Proses ➔ Pembayaran. Lengkapi informasi akun bank pengeluaran, klik tombol Hitung Nilai Pembayaran, lalu klik Simpan.",
           screenshotNote: "Form pembayaran kas/bank untuk pelunasan uang muka PO"
         }
-      ]
+      ]}
+    />
+  );
 };

@@ -1,12 +1,19 @@
-import { ArticleData } from '../../../types/article';
+import React from 'react';
+import { ArticleTemplate } from './ArticleTemplate';
 
-export const caraMembuatFakturPembelianData: ArticleData = {
-  id: 'cara-membuat-faktur-pembelian',
-  title: "Cara Membuat Faktur Pembelian (Purchase Invoice)",
-  category: "Faktur Pembelian",
-  readTime: "3.5 Menit",
-  summary: "Faktur Pembelian mencatat tagihan resmi dari pemasok atas barang atau jasa yang telah diterima, sekaligus membentuk hutang usaha (Account Payable) perusahaan dalam laporan keuangan.",
-  steps: [
+interface Props {
+  onBack: () => void;
+}
+
+export const ArticleFakturPembelian: React.FC<Props> = ({ onBack }) => {
+  return (
+    <ArticleTemplate
+      title="Cara Membuat Faktur Pembelian (Purchase Invoice)"
+      category="Faktur Pembelian"
+      readTime="3.5 Menit"
+      onBack={onBack}
+      summary="Faktur Pembelian mencatat tagihan resmi dari pemasok atas barang atau jasa yang telah diterima, sekaligus membentuk hutang usaha (Account Payable) perusahaan dalam laporan keuangan."
+      steps={[
         {
           num: 1,
           title: "Akses Menu Faktur Pembelian",
@@ -31,5 +38,7 @@ export const caraMembuatFakturPembelianData: ArticleData = {
           desc: "Pastikan total tagihan, potongan termin, dan pajak sesuai dengan surat tagihan fisik. Klik 'Simpan' untuk memposting hutang usaha.",
           screenshotNote: "Pratinjau total faktur pembelian dan tombol simpan final"
         }
-      ]
+      ]}
+    />
+  );
 };

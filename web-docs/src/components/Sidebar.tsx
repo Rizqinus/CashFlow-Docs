@@ -1,5 +1,4 @@
 import React from 'react';
-import { ChevronRight } from 'lucide-react';
 
 interface SidebarProps {
   currentModule: string;
@@ -36,7 +35,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="sidebar-category">
             <div className="sidebar-item" onClick={() => toggleCategory('memulai')}>
               <span>Memulai CashFlow Online</span>
-              <span className={`arrow ${openCategories.memulai ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+              <span className={`arrow ${openCategories.memulai ? 'down' : ''}`}>
+                {openCategories.memulai ? '⌄' : '›'}
+              </span>
             </div>
             {openCategories.memulai && (
               <div className="category-children">
@@ -51,7 +52,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="sidebar-category">
             <div className="sidebar-item" onClick={() => toggleCategory('store')}>
               <span>CashFlow Store</span>
-              <span className={`arrow ${openCategories.store ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+              <span className={`arrow ${openCategories.store ? 'down' : ''}`}>
+                {openCategories.store ? '⌄' : '›'}
+              </span>
             </div>
             {openCategories.store && (
               <div className="category-children">
@@ -65,7 +68,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className={`sidebar-category ${openCategories.fitur ? 'open' : ''}`}>
             <div className="category-header" onClick={() => toggleCategory('fitur')}>
               <span>Fitur CashFlow Online</span>
-              <span className={`arrow ${openCategories.fitur ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+              <span className={`arrow ${openCategories.fitur ? 'down' : ''}`}>
+                {openCategories.fitur ? '⌄' : '›'}
+              </span>
             </div>
 
             {openCategories.fitur && (
@@ -74,7 +79,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="module-group">
                   <div className="module-header" onClick={() => toggleCategory('dashboard')}>
                     <span>Dashboard</span>
-                    <span className={`arrow ${openCategories.dashboard ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                    <span className={`arrow ${openCategories.dashboard ? 'down' : ''}`}>
+                      {openCategories.dashboard ? '⌄' : '›'}
+                    </span>
                   </div>
                   {openCategories.dashboard && (
                     <div className="module-children">
@@ -88,7 +95,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="module-group">
                   <div className="module-header" onClick={() => toggleCategory('pengaturan')}>
                     <span>Pengaturan</span>
-                    <span className={`arrow ${openCategories.pengaturan ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                    <span className={`arrow ${openCategories.pengaturan ? 'down' : ''}`}>
+                      {openCategories.pengaturan ? '⌄' : '›'}
+                    </span>
                   </div>
                   {openCategories.pengaturan && (
                     <div className="module-children">
@@ -103,7 +112,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="module-group">
                   <div className="module-header" onClick={() => toggleCategory('perusahaan')}>
                     <span>Perusahaan</span>
-                    <span className={`arrow ${openCategories.perusahaan ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                    <span className={`arrow ${openCategories.perusahaan ? 'down' : ''}`}>
+                      {openCategories.perusahaan ? '⌄' : '›'}
+                    </span>
                   </div>
                   {openCategories.perusahaan && (
                     <div className="module-children">
@@ -118,7 +129,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="module-group">
                   <div className="module-header" onClick={() => toggleCategory('bukubesar')}>
                     <span>Buku Besar</span>
-                    <span className={`arrow ${openCategories.bukubesar ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                    <span className={`arrow ${openCategories.bukubesar ? 'down' : ''}`}>
+                      {openCategories.bukubesar ? '⌄' : '›'}
+                    </span>
                   </div>
                   {openCategories.bukubesar && (
                     <div className="module-children">
@@ -134,7 +147,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="module-group">
                   <div className="module-header" onClick={() => toggleCategory('kasbank')}>
                     <span>Kas & Bank</span>
-                    <span className={`arrow ${openCategories.kasbank ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                    <span className={`arrow ${openCategories.kasbank ? 'down' : ''}`}>
+                      {openCategories.kasbank ? '⌄' : '›'}
+                    </span>
                   </div>
                   {openCategories.kasbank && (
                     <div className="module-children">
@@ -150,7 +165,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="module-group">
                   <div className="module-header" onClick={() => toggleCategory('penjualan')}>
                     <span>Penjualan</span>
-                    <span className={`arrow ${openCategories.penjualan ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                    <span className={`arrow ${openCategories.penjualan ? 'down' : ''}`}>
+                      {openCategories.penjualan ? '⌄' : '›'}
+                    </span>
                   </div>
                   {openCategories.penjualan && (
                     <div className="module-children">
@@ -168,7 +185,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="module-group active">
                   <div className="module-header" onClick={() => toggleCategory('pembelian')}>
                     <span>Pembelian</span>
-                    <span className={`arrow ${openCategories.pembelian ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                    <span className={`arrow ${openCategories.pembelian ? 'down' : ''}`}>
+                      {openCategories.pembelian ? '⌄' : '›'}
+                    </span>
                   </div>
                   
                   {openCategories.pembelian && (
@@ -183,7 +202,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           }}
                         >
                           <span>Pesanan Pembelian</span>
-                          <span className={`arrow ${openCategories.pesanan ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                          <span className={`arrow ${openCategories.pesanan ? 'down' : ''}`}>
+                            {openCategories.pesanan ? '⌄' : '›'}
+                          </span>
                         </div>
 
                         {openCategories.pesanan && (
@@ -274,7 +295,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           }}
                         >
                           <span>Penerimaan Barang</span>
-                          <span className={`arrow ${openCategories.penerimaan ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                          <span className={`arrow ${openCategories.penerimaan ? 'down' : ''}`}>
+                            {openCategories.penerimaan ? '⌄' : '›'}
+                          </span>
                         </div>
 
                         {openCategories.penerimaan && (
@@ -321,7 +344,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           }}
                         >
                           <span>Faktur Pembelian</span>
-                          <span className={`arrow ${openCategories.faktur ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                          <span className={`arrow ${openCategories.faktur ? 'down' : ''}`}>
+                            {openCategories.faktur ? '⌄' : '›'}
+                          </span>
                         </div>
 
                         {openCategories.faktur && (
@@ -500,7 +525,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="module-group">
                   <div className="module-header" onClick={() => toggleCategory('persediaan')}>
                     <span>Persediaan</span>
-                    <span className={`arrow ${openCategories.persediaan ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                    <span className={`arrow ${openCategories.persediaan ? 'down' : ''}`}>
+                      {openCategories.persediaan ? '⌄' : '›'}
+                    </span>
                   </div>
                   {openCategories.persediaan && (
                     <div className="module-children">

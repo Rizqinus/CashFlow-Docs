@@ -1,12 +1,19 @@
-import { ArticleData } from '../../../types/article';
+import React from 'react';
+import { ArticleTemplate } from './ArticleTemplate';
 
-export const prosesPoMenjadiTagihanSupplierData: ArticleData = {
-  id: 'proses-po-menjadi-tagihan-supplier',
-  title: "Cara Memproses PO Menjadi Tagihan Supplier (Faktur Pembelian)",
-  category: "Faktur Pembelian",
-  readTime: "2.5 Menit",
-  summary: "Jika perusahaan membeli jasa atau barang yang langsung ditagihkan tanpa melalui tahap penerimaan gudang fisik, pesanan pembelian (PO) dapat langsung ditarik ke dalam formulir Faktur Pembelian.",
-  steps: [
+interface Props {
+  onBack: () => void;
+}
+
+export const ArticleFakturDariPO: React.FC<Props> = ({ onBack }) => {
+  return (
+    <ArticleTemplate
+      title="Cara Memproses PO Menjadi Tagihan Supplier (Faktur Pembelian)"
+      category="Faktur Pembelian"
+      readTime="2.5 Menit"
+      onBack={onBack}
+      summary="Jika perusahaan membeli jasa atau barang yang langsung ditagihkan tanpa melalui tahap penerimaan gudang fisik, pesanan pembelian (PO) dapat langsung ditarik ke dalam formulir Faktur Pembelian."
+      steps={[
         {
           num: 1,
           title: "Buka Menu Faktur Pembelian",
@@ -31,5 +38,7 @@ export const prosesPoMenjadiTagihanSupplierData: ArticleData = {
           desc: "Isi nomor faktur dari pemasok pada tab Info Lainnya, kemudian klik tombol Simpan.",
           screenshotNote: "Konfirmasi penyimpanan faktur tagihan supplier"
         }
-      ]
+      ]}
+    />
+  );
 };

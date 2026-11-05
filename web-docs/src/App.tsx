@@ -6,115 +6,62 @@ import './App.css';
 import { Navbar } from './components/Navbar';
 import { Sidebar } from './components/Sidebar';
 import { Footer } from './components/Footer';
-import { ArticleTemplate } from './components/ArticleTemplate';
-import { ArticleData } from './types/article';
 
 // Modular Pages
 import { ModuleIndex } from './pages/ModuleIndex';
+import { ArticleManual } from './pages/articles/ArticleManual';
+import { ArticlePO } from './pages/articles/ArticlePO';
+import { ArticleErrorZero } from './pages/articles/ArticleErrorZero';
 
-// Sub-Modul 01: Pesanan Barang (.ts)
-import { caraMembatalkanPesananData } from './pages/pembelian/01-pesanan-barang/cara-membatalkan-pesanan';
-import { caraMencatatDpKeSupplierData } from './pages/pembelian/01-pesanan-barang/cara-mencatat-dp-ke-supplier';
-import { caraOrderBarangKeSupplierData } from './pages/pembelian/01-pesanan-barang/cara-order-barang-ke-supplier';
-import { hapusBanyakPesananSekaligusData } from './pages/pembelian/01-pesanan-barang/hapus-banyak-pesanan-sekaligus';
-import { inputPembelianDariExcelData } from './pages/pembelian/01-pesanan-barang/input-pembelian-dari-excel';
-import { inputPembelianLuarNegeriExcelData } from './pages/pembelian/01-pesanan-barang/input-pembelian-luar-negeri-excel';
-import { orderDariPesananPelangganData } from './pages/pembelian/01-pesanan-barang/order-dari-pesanan-pelanggan';
-import { pesananDariPermintaanBarangData } from './pages/pembelian/01-pesanan-barang/pesanan-dari-permintaan-barang';
-
-// Sub-Modul 02: Penerimaan Barang (.ts)
-import { articleManual } from './pages/pembelian/02-penerimaan-barang/cara-membuat-penerimaan-barang';
-import { articleErrorZero } from './pages/pembelian/02-penerimaan-barang/error-pengeluaran-nol-aset-tetap';
-import { articlePO } from './pages/pembelian/02-penerimaan-barang/penerimaan-barang-dari-pesanan';
-
-// Sub-Modul 03: Faktur Pembelian (.ts)
-import { bebanPembelianKeCostPersediaanData } from './pages/pembelian/03-faktur-pembelian/beban-pembelian-ke-cost-persediaan';
-import { biayaOngkirForwarderKeHppData } from './pages/pembelian/03-faktur-pembelian/biaya-ongkir-forwarder-ke-hpp';
-import { caraMembuatFakturPembelianData } from './pages/pembelian/03-faktur-pembelian/cara-membuat-faktur-pembelian';
-import { diskonTidakMunculDiJurnalData } from './pages/pembelian/03-faktur-pembelian/diskon-tidak-muncul-di-jurnal';
-import { errorAkunPembulatanBelumDiisiData } from './pages/pembelian/03-faktur-pembelian/error-akun-pembulatan-belum-diisi';
-import { errorTidakDapatMemperbaruiBiayaData } from './pages/pembelian/03-faktur-pembelian/error-tidak-dapat-memperbarui-biaya';
-import { invoiceDariBarangSudahDiterimaData } from './pages/pembelian/03-faktur-pembelian/invoice-dari-barang-sudah-diterima';
-import { invoiceSupplierSebelumBarangDatangData } from './pages/pembelian/03-faktur-pembelian/invoice-supplier-sebelum-barang-datang';
-import { kurangiTagihanPotonganSupplierData } from './pages/pembelian/03-faktur-pembelian/kurangi-tagihan-potongan-supplier';
-import { pajakJasaRenovasiPeroranganData } from './pages/pembelian/03-faktur-pembelian/pajak-jasa-renovasi-perorangan';
-import { potongFakturDenganUangMukaData } from './pages/pembelian/03-faktur-pembelian/potong-faktur-dengan-uang-muka';
-import { prosesPoMenjadiTagihanSupplierData } from './pages/pembelian/03-faktur-pembelian/proses-po-menjadi-tagihan-supplier';
-import { tagihanSupplierSebelumBarangDiterimaData } from './pages/pembelian/03-faktur-pembelian/tagihan-supplier-sebelum-barang-diterima';
-import { uploadFakturPembelianDariExcelData } from './pages/pembelian/03-faktur-pembelian/upload-faktur-pembelian-dari-excel';
-
-const articleDataMap: Record<string, ArticleData> = {
-  // 01 Pesanan
-  'po-create': caraOrderBarangKeSupplierData,
-  'po-dp': caraMencatatDpKeSupplierData,
-  'po-cancel': caraMembatalkanPesananData,
-  'po-so': orderDariPesananPelangganData,
-  'po-excel': inputPembelianDariExcelData,
-  'po-valas': inputPembelianLuarNegeriExcelData,
-  'po-pr': pesananDariPermintaanBarangData,
-  'po-delete-batch': hapusBanyakPesananSekaligusData,
-
-  // 02 Penerimaan
-  'art1': articleManual,
-  'art2': articlePO,
-  'art3': articleErrorZero,
-
-  // 03 Faktur
-  'faktur-create': caraMembuatFakturPembelianData,
-  'faktur-po': prosesPoMenjadiTagihanSupplierData,
-  'faktur-sebelum-datang': invoiceSupplierSebelumBarangDatangData,
-  'faktur-beban-cost': bebanPembelianKeCostPersediaanData,
-  'faktur-terima': invoiceDariBarangSudahDiterimaData,
-  'faktur-tagihan-sebelum-terima': tagihanSupplierSebelumBarangDiterimaData,
-  'faktur-error-update-cost': errorTidakDapatMemperbaruiBiayaData,
-  'faktur-pajak-renovasi': pajakJasaRenovasiPeroranganData,
-  'faktur-ongkir-hpp': biayaOngkirForwarderKeHppData,
-  'faktur-diskon-jurnal': diskonTidakMunculDiJurnalData,
-  'faktur-upload-excel': uploadFakturPembelianDariExcelData,
-  'faktur-potong-dp': potongFakturDenganUangMukaData,
-  'faktur-akun-pembulatan': errorAkunPembulatanBelumDiisiData,
-  'faktur-kurangi-tagihan': kurangiTagihanPotonganSupplierData,
-};
+// Halaman Baru Sesuai Help CashFlow (Pesanan & Faktur)
+import { ArticlePesananPembelian } from './pages/articles/ArticlePesananPembelian';
+import { ArticlePOUangMuka } from './pages/articles/ArticlePOUangMuka';
+import { ArticlePOBatal } from './pages/articles/ArticlePOBatal';
+import { ArticleFakturPembelian } from './pages/articles/ArticleFakturPembelian';
+import { ArticleFakturDariPO } from './pages/articles/ArticleFakturDariPO';
+import { ArticleFakturDariPenerimaan } from './pages/articles/ArticleFakturDariPenerimaan';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('index');
   const [currentModule, setCurrentModule] = useState('Penerimaan Barang');
   const [searchQuery, setSearchQuery] = useState('');
   const [showProdukDropdown, setShowProdukDropdown] = useState(false);
-
-  // Accordion state
+  
+  // State accordion sidebar
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
-    fitur: true,
-    pembelian: true,
-    pesanan: true,
-    penerimaan: true,
-    faktur: true,
     memulai: false,
     store: false,
+    fitur: true,
     dashboard: false,
     pengaturan: false,
     perusahaan: false,
     bukubesar: false,
     kasbank: false,
     penjualan: false,
-    persediaan: false
+    pembelian: true,
+    persediaan: false,
+    asettetap: false,
+    penerimaan: true,
+    pesanan: true,
+    faktur: true
   });
 
   const toggleCategory = (cat: string) => {
-    setOpenCategories(prev => ({
-      ...prev,
-      [cat]: !prev[cat]
-    }));
+    setOpenCategories(prev => ({ ...prev, [cat]: !prev[cat] }));
   };
 
   const handleSelectModule = (modName: string) => {
     setCurrentModule(modName);
-    setActiveTab('index');
+    if (modName === 'Penerimaan Barang') {
+      setActiveTab('index');
+    } else {
+      setActiveTab('placeholder');
+    }
   };
 
   return (
-    <div className="layout-root">
-      {/* 1. TOP HEADER / NAVBAR */}
+    <div className="doc-app">
+      {/* 1. TOP NAVBAR */}
       <Navbar 
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -176,40 +123,81 @@ export default function App() {
             />
           )}
 
-          {/* RENDER DYNAMIC ARTICLE TEMPLATE */}
-          {articleDataMap[activeTab] && (
-            <ArticleTemplate 
-              article={articleDataMap[activeTab]}
-              onBack={() => setActiveTab('index')}
+          {activeTab === 'art1' && (
+            <ArticleManual 
+              onBackToIndex={() => setActiveTab('index')}
+              onNextArticle={() => setActiveTab('art2')}
             />
+          )}
+
+          {activeTab === 'art2' && (
+            <ArticlePO 
+              onBackToIndex={() => setActiveTab('index')}
+              onNextArticle={() => setActiveTab('art3')}
+            />
+          )}
+
+          {activeTab === 'art3' && (
+            <ArticleErrorZero 
+              onBackToIndex={() => setActiveTab('index')}
+              onPrevArticle={() => setActiveTab('art2')}
+            />
+          )}
+
+          {/* HALAMAN ARTIKEL PESANAN PEMBELIAN */}
+          {activeTab === 'po-create' && (
+            <ArticlePesananPembelian onBack={() => setActiveTab('index')} />
+          )}
+          {activeTab === 'po-dp' && (
+            <ArticlePOUangMuka onBack={() => setActiveTab('index')} />
+          )}
+          {activeTab === 'po-cancel' && (
+            <ArticlePOBatal onBack={() => setActiveTab('index')} />
+          )}
+
+          {/* HALAMAN ARTIKEL FAKTUR PEMBELIAN */}
+          {activeTab === 'faktur-create' && (
+            <ArticleFakturPembelian onBack={() => setActiveTab('index')} />
+          )}
+          {activeTab === 'faktur-po' && (
+            <ArticleFakturDariPO onBack={() => setActiveTab('index')} />
+          )}
+          {activeTab === 'faktur-terima' && (
+            <ArticleFakturDariPenerimaan onBack={() => setActiveTab('index')} />
           )}
         </main>
 
-        {/* RIGHT SIDEBAR: TABLE OF CONTENTS (TOC) */}
-        <aside className="toc-sidebar">
-          <div className="toc-title">DAFTAR ISI</div>
-          <ul className="toc-list">
-            {articleDataMap[activeTab] ? (
-              articleDataMap[activeTab].steps.map((st) => (
-                <li key={st.num} className="toc-item active">
-                  <a href={`#step-${st.num}`}>{st.num}. {st.title}</a>
-                </li>
-              ))
-            ) : (
-              <>
-                <li className="toc-item active">
-                  <a href="#overview">Ikhtisar Modul</a>
-                </li>
-                <li className="toc-item">
-                  <a href="#daftar-panduan">Daftar Panduan</a>
-                </li>
-              </>
+        {/* RIGHT TABLE OF CONTENTS (HANYA MUNCUL DI ARTIKEL DETAIL SESUAI CASHFLOW DOCS) */}
+        {activeTab !== 'index' && activeTab !== 'placeholder' && (
+          <aside className="toc-sidebar">
+            <div className="toc-header">On this page</div>
+            {activeTab === 'art1' && (
+              <ul className="toc-list">
+                <li className="active">Cara mencatat barang masuk</li>
+                <li>1. Buka modul Pembelian</li>
+                <li>2. Mengisi informasi penting</li>
+              </ul>
             )}
-          </ul>
-        </aside>
+            {activeTab === 'art2' && (
+              <ul className="toc-list">
+                <li className="active">Penerimaan dari PO</li>
+                <li>1. Buka form Penerimaan</li>
+                <li>2. Ambil dari Pesanan Pembelian</li>
+              </ul>
+            )}
+            {activeTab === 'art3' && (
+              <ul className="toc-list">
+                <li className="active">Mengatasi Error Nilai Nol</li>
+                <li>1. Periksa Nilai Total</li>
+                <li>2. Periksa Dokumen Asal</li>
+                <li>3. Tarik Ulang & Simpan</li>
+              </ul>
+            )}
+          </aside>
+        )}
       </div>
 
-      {/* 3. FOOTER */}
+      {/* 3. FOOTER RESMI */}
       <Footer />
     </div>
   );
