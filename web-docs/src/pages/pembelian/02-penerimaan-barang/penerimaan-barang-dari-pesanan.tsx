@@ -45,7 +45,7 @@ export const PenerimaanBarangDariPesanan: React.FC<ArticleProps> = ({ onBack }) 
         <div className="steps-container">
           <div key={1} className="step-section">
             <h3 className="step-title">1. Buka formulir Penerimaan Barang dan Pilih Supplier</h3>
-            <p className="step-description">Masuk ke menu Pembelian ➔ Penerimaan Barang. Pilih nama Supplier yang sesuai dengan supplier penerbit PO.</p>
+            <p className="step-description">Masuk ke menu Pembelian ➔ Penerimaan Barang. Pilih nama Supplier (contoh: Bahan Pokok / a001) yang sesuai dengan pemasok penerbit PO.</p>
             <div className="capture-image-frame" style={{ marginTop: '14px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #cbd5e1', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.08)' }}>
               <div className="capture-header-bar">
                 <div className="window-dots">
@@ -58,7 +58,7 @@ export const PenerimaanBarangDariPesanan: React.FC<ArticleProps> = ({ onBack }) 
                 </div>
               </div>
               <img src="/images/pembelian/cashflow_penerimaan_langkah_1.png" alt="Buka formulir Penerimaan Barang dan Pilih Supplier" style={{ width: '100%', height: 'auto', display: 'block' }} />
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderTop: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b' }}>Gambar 1: Membuka formulir Penerimaan Barang dan memilih pemasok</div>
+              <div style={{ padding: '8px 12px', background: '#f8fafc', borderTop: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b' }}>Gambar 1: Membuka formulir Penerimaan Barang dan memilih pemasok Bahan Pokok (a001)</div>
             </div>
           </div>
 
@@ -77,14 +77,14 @@ export const PenerimaanBarangDariPesanan: React.FC<ArticleProps> = ({ onBack }) 
                 </div>
               </div>
               <img src="/images/pembelian/cashflow_penerimaan_langkah_2.png" alt="Klik tombol Ambil ➔ Pilih Pesanan Pembelian" style={{ width: '100%', height: 'auto', display: 'block' }} />
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderTop: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b' }}>Gambar 2: Memilih opsi pengambilan data dari Pesanan Pembelian</div>
+              <div style={{ padding: '8px 12px', background: '#f8fafc', borderTop: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b' }}>Gambar 2: Mengklik opsi Ambil lalu memilih Pesanan Pembelian</div>
             </div>
           </div>
 
           <div key={3} className="step-section">
             <h3 className="step-title">3. Pilih Nomor Transaksi PO dan Klik Lanjut</h3>
-            <p className="step-description">Pilih nomor dokumen PO yang barangnya sedang diterima, centang item barang yang datang, lalu klik tombol Lanjut.</p>
-            <div className="capture-placeholder-frame">
+            <p className="step-description">Pada modal Salin Dari Pesanan Pembelian, pilih nomor transaksi PO terkait (contoh: nomor 2026110001 senilai IDR 50.000 atas item Indomie 10 PCS), periksa rincian barang, lalu klik tombol Lanjut.</p>
+            <div className="capture-image-frame" style={{ marginTop: '14px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #cbd5e1', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.08)' }}>
               <div className="capture-header-bar">
                 <div className="window-dots">
                   <span className="dot red"></span>
@@ -95,13 +95,8 @@ export const PenerimaanBarangDariPesanan: React.FC<ArticleProps> = ({ onBack }) 
                   appcashflow.id/penerimaan-barang
                 </div>
               </div>
-              <div className="capture-body-content">
-                <Camera size={32} className="camera-icon-muted" />
-                <span className="capture-label">Area Tangkapan Layar: Pilih Nomor Transaksi PO dan Klik Lanjut</span>
-                <span className="capture-sublabel">
-                  Aset visual: Dialog pemilihan nomor PO dan checklist item barang yang diterima
-                </span>
-              </div>
+              <img src="/images/pembelian/cashflow_penerimaan_langkah_3.png" alt="Pilih Nomor Transaksi PO dan Klik Lanjut" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <div style={{ padding: '8px 12px', background: '#f8fafc', borderTop: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b' }}>Gambar 3: Memilih dokumen PO 2026110001 dan mengonfirmasi tombol Lanjut</div>
             </div>
           </div>
 

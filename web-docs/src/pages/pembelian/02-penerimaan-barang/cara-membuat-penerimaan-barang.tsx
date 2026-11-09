@@ -64,7 +64,7 @@ export const CaraMembuatPenerimaanBarang: React.FC<ArticleProps> = ({ onBack }) 
 
           <div key={2} className="step-section">
             <h3 className="step-title">2. Isi informasi Supplier dan Cari Barang</h3>
-            <p className="step-description">Pilih nama pemasok pada kolom Supplier (1), tentukan tanggal terima, lalu pada kolom Scan / Cari Barang pilih item barang fisik yang masuk (2).</p>
+            <p className="step-description">Pilih nama pemasok pada kolom Supplier (contoh: Bahan Pokok / a001), tentukan tanggal terima, lalu pada kolom Scan / Cari Barang pilih item barang fisik yang masuk (contoh: Beras).</p>
             <div className="capture-image-frame" style={{ marginTop: '14px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #cbd5e1', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.08)' }}>
               <div className="capture-header-bar">
                 <div className="window-dots">
@@ -77,13 +77,13 @@ export const CaraMembuatPenerimaanBarang: React.FC<ArticleProps> = ({ onBack }) 
                 </div>
               </div>
               <img src="/images/pembelian/cashflow_manual_langkah_2.png" alt="Isi informasi Supplier dan Cari Barang" style={{ width: '100%', height: 'auto', display: 'block' }} />
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderTop: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b' }}>Gambar 2: Mengisi header dokumen (1) dan memilih item barang pada kolom pencarian (2)</div>
+              <div style={{ padding: '8px 12px', background: '#f8fafc', borderTop: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b' }}>Gambar 2: Mengisi pemasok Bahan Pokok dan memilih item barang pada menu pencarian Scan / Cari Barang</div>
             </div>
           </div>
 
           <div key={3} className="step-section">
             <h3 className="step-title">3. Tentukan Kuantitas dan Tambahkan Barang</h3>
-            <p className="step-description">Pada modal pop-up yang muncul, tentukan kuantitas barang yang diterima secara fisik, lalu klik tombol Tambahkan.</p>
+            <p className="step-description">Pada modal pop-up Tambah Barang, periksa kuantitas barang fisik yang masuk (contoh: 12 KG Beras), pastikan harga satuan terisi (contoh: IDR 15.000 dengan total IDR 180.000,00), lalu klik tombol Tambahkan.</p>
             <div className="capture-image-frame" style={{ marginTop: '14px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #cbd5e1', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.08)' }}>
               <div className="capture-header-bar">
                 <div className="window-dots">
@@ -96,7 +96,7 @@ export const CaraMembuatPenerimaanBarang: React.FC<ArticleProps> = ({ onBack }) 
                 </div>
               </div>
               <img src="/images/pembelian/cashflow_manual_langkah_3.png" alt="Tentukan Kuantitas dan Tambahkan Barang" style={{ width: '100%', height: 'auto', display: 'block' }} />
-              <div style={{ padding: '8px 12px', background: '#f8fafc', borderTop: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b' }}>Gambar 3: Memeriksa kuantitas/harga barang dan mengonfirmasi tombol Tambahkan</div>
+              <div style={{ padding: '8px 12px', background: '#f8fafc', borderTop: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b' }}>Gambar 3: Memeriksa rincian barang (12 KG Beras @15.000 = Rp 180.000,00) pada pop-up Tambah Barang dan mengonfirmasi tombol Tambahkan</div>
             </div>
           </div>
 

@@ -16,19 +16,19 @@ Gunakan cara ini jika barang datang langsung dari supplier tanpa dibuatkan dokum
    ![Menu Pembelian CashFlow](../assets/step1-menu-pembelian.png)
 
 2. **Isi Data Header Transaksi:**
-   - **Supplier:** Pilih rekanan pemasok barang (contoh: `abc / a001`).
+   - **Supplier:** Pilih rekanan pemasok barang (contoh: `Bahan Pokok / a001`).
    - **Mata Uang:** Standar `IDR`.
-   - **Tanggal:** Masukkan tanggal fisik barang tiba (contoh: `10/22/2026`).
+   - **Tanggal:** Masukkan tanggal fisik barang tiba (contoh: `11/09/2026`).
    - **No Pengiriman:** Nomor surat jalan fisik dari pengirim (atau biarkan default `Auto`).
 
 3. **Cari dan Tambah Barang:**
    - Ketik nama barang pada kolom pencarian **Scan / Cari Barang...**.
-   - Sistem akan menampilkan daftar stok dan item yang tersedia di master barang (contoh: `Indomie`, stok `22`).
+   - Sistem akan menampilkan daftar stok dan item yang tersedia di master barang (contoh: `Beras`, `Indomie`, `SUPERMI`).
    ![Pencarian Barang](../assets/step1-cari-barang.png)
 
 4. **Konfigurasi Kuantitas & Harga Beli:**
-   - Pada modal dialog **Tambah Barang**, tentukan kuantitas barang fisik yang masuk (contoh: `2 PCS`).
-   - Pastikan **Harga Satuan** terisi valid (contoh: `IDR 22.202`).
+   - Pada modal dialog **Tambah Barang**, tentukan kuantitas barang fisik yang masuk (contoh: `12 KG` item `Beras`).
+   - Pastikan **Harga Satuan** terisi valid (contoh: `IDR 15.000` dengan subtotal `IDR 180.000,00`).
    - Periksa subtotal barang, lalu klik tombol **Tambahkan**.
    ![Modal Tambah Barang](../assets/step1-tambah-barang-modal.png)
 
@@ -45,7 +45,7 @@ Gunakan cara ini jika perusahaan sebelumnya sudah menerbitkan dokumen Purchase O
 
 1. **Buka Form Baru & Pilih Supplier:**
    - Buka menu **Pembelian** ➔ **Penerimaan Pesanan**.
-   - Pilih nama **Supplier** yang sama dengan data di Purchase Order.
+   - Pilih nama **Supplier** yang sama dengan data di Purchase Order (contoh: `Bahan Pokok / a001`).
 
 2. **Tarik Dokumen Pesanan Pembelian:**
    - Pada sisi kanan form di bagian **Ambil**, klik dropdown **Dari Transaksi**.
@@ -55,7 +55,7 @@ Gunakan cara ini jika perusahaan sebelumnya sudah menerbitkan dokumen Purchase O
 3. **Pilih Nomor Dokumen PO:**
    - Kotak dialog modal **Salin Dari Pesanan Pembelian** akan terbuka.
    - Klik dropdown daftar pesanan pembelian yang masih berstatus terbuka (*outstanding*).
-   - Pilih nomor transaksi PO terkait (contoh: nomor `2026100003` - item `Indomie` senilai `IDR 488.444`).
+   - Pilih nomor transaksi PO terkait (contoh: nomor `2026110001` - item `001 Indomie` kuantitas `10 PCS` senilai `IDR 50.000`).
    ![Salin Dari Pesanan Pembelian](../assets/step2-salin-pesanan-modal.png)
 
 4. **Sesuaikan Kuantitas (Jika Diterima Parsial):**
