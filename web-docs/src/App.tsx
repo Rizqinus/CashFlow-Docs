@@ -70,16 +70,24 @@ const articleComponentMap: Record<string, React.ComponentType<{ onBack: () => vo
   'faktur-po': ProsesPoMenjadiTagihanSupplier,
   'faktur-sebelum-datang': InvoiceSupplierSebelumBarangDatang,
   'faktur-beban-cost': BebanPembelianKeCostPersediaan,
+  'faktur-cost-persediaan': BebanPembelianKeCostPersediaan,
   'faktur-terima': InvoiceDariBarangSudahDiterima,
   'faktur-tagihan-sebelum-terima': TagihanSupplierSebelumBarangDiterima,
+  'faktur-dimuka': TagihanSupplierSebelumBarangDiterima,
   'faktur-error-update-cost': ErrorTidakDapatMemperbaruiBiaya,
+  'faktur-error-biaya': ErrorTidakDapatMemperbaruiBiaya,
   'faktur-pajak-renovasi': PajakJasaRenovasiPerorangan,
   'faktur-ongkir-hpp': BiayaOngkirForwarderKeHpp,
   'faktur-diskon-jurnal': DiskonTidakMunculDiJurnal,
   'faktur-upload-excel': UploadFakturPembelianDariExcel,
   'faktur-potong-dp': PotongFakturDenganUangMuka,
   'faktur-akun-pembulatan': ErrorAkunPembulatanBelumDiisi,
+  'faktur-error-pembulatan': ErrorAkunPembulatanBelumDiisi,
   'faktur-kurangi-tagihan': KurangiTagihanPotonganSupplier,
+  'faktur-potongan-supplier': KurangiTagihanPotonganSupplier,
+  'po-delete': HapusBanyakPesananSekaligus,
+  'po-import': InputPembelianDariExcel,
+  'art-beli-pembulatan': ErrorAkunPembulatanBelumDiisi,
 };
 
 const articleMetaMap: Record<string, ArticleMeta> = {
@@ -103,16 +111,24 @@ const articleMetaMap: Record<string, ArticleMeta> = {
   'faktur-po': proses_po_menjadi_tagihan_supplier_meta,
   'faktur-sebelum-datang': invoice_supplier_sebelum_barang_datang_meta,
   'faktur-beban-cost': beban_pembelian_ke_cost_persediaan_meta,
+  'faktur-cost-persediaan': beban_pembelian_ke_cost_persediaan_meta,
   'faktur-terima': invoice_dari_barang_sudah_diterima_meta,
   'faktur-tagihan-sebelum-terima': tagihan_supplier_sebelum_barang_diterima_meta,
+  'faktur-dimuka': tagihan_supplier_sebelum_barang_diterima_meta,
   'faktur-error-update-cost': error_tidak_dapat_memperbarui_biaya_meta,
+  'faktur-error-biaya': error_tidak_dapat_memperbarui_biaya_meta,
   'faktur-pajak-renovasi': pajak_jasa_renovasi_perorangan_meta,
   'faktur-ongkir-hpp': biaya_ongkir_forwarder_ke_hpp_meta,
   'faktur-diskon-jurnal': diskon_tidak_muncul_di_jurnal_meta,
   'faktur-upload-excel': upload_faktur_pembelian_dari_excel_meta,
   'faktur-potong-dp': potong_faktur_dengan_uang_muka_meta,
   'faktur-akun-pembulatan': error_akun_pembulatan_belum_diisi_meta,
+  'faktur-error-pembulatan': error_akun_pembulatan_belum_diisi_meta,
   'faktur-kurangi-tagihan': kurangi_tagihan_potongan_supplier_meta,
+  'faktur-potongan-supplier': kurangi_tagihan_potongan_supplier_meta,
+  'po-delete': hapus_banyak_pesanan_sekaligus_meta,
+  'po-import': input_pembelian_dari_excel_meta,
+  'art-beli-pembulatan': error_akun_pembulatan_belum_diisi_meta,
 };
 
 export default function App() {
@@ -219,10 +235,24 @@ export default function App() {
           )}
 
           {/* RENDER ACTIVE ARTICLE COMPONENT (.TSX) */}
-          {ActiveArticle && (
+          {ActiveArticle ? (
             <ActiveArticle 
               onBack={() => setActiveTab('index')}
             />
+          ) : (activeTab !== 'index' && activeTab !== 'placeholder') && (
+            <div className="page-index">
+              <h1 className="page-title">{currentModule}</h1>
+              <p className="page-subtitle">Modul dokumentasi resmi untuk {currentModule} di CashFlow Online.</p>
+
+              <div className="empty-state-box">
+                <img src="/assets/empty-box.png" alt="Empty" className="empty-img" />
+                <h3>Dokumentasi Sedang Disusun</h3>
+                <p>Panduan langkah demi langkah untuk topik ini sedang dalam proses integrasi.</p>
+                <button className="pag-btn" onClick={() => handleSelectModule('Penerimaan Barang')}>
+                  Kembali ke Penerimaan Barang ➔
+                </button>
+              </div>
+            </div>
           )}
         </main>
 
