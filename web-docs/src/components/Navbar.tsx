@@ -1,5 +1,5 @@
-import React from 'react';
-import { Search, Sun } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, Sun, Moon, Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   searchQuery: string;
@@ -7,6 +7,10 @@ interface NavbarProps {
   showProdukDropdown: boolean;
   setShowProdukDropdown: (show: boolean) => void;
   onHomeClick: () => void;
+  isDark?: boolean;
+  toggleTheme?: () => void;
+  onToggleMobileMenu?: () => void;
+  isMobileMenuOpen?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -14,12 +18,27 @@ export const Navbar: React.FC<NavbarProps> = ({
   setSearchQuery,
   showProdukDropdown,
   setShowProdukDropdown,
-  onHomeClick
+  onHomeClick,
+  isDark = false,
+  toggleTheme,
+  onToggleMobileMenu,
+  isMobileMenuOpen = false
 }) => {
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
+
   return (
     <header className="navbar">
       <div className="navbar-container">
         <div className="navbar-left">
+          {/* Mobile hamburger menu */}
+          <button 
+            className="mobile-hamburger-btn" 
+            onClick={onToggleMobileMenu}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+
           <div className="brand-logo" onClick={onHomeClick}>
             <img src="/assets/logo-cashflow.png" alt="CashFlow Logo" className="logo-img" />
           </div>
@@ -36,19 +55,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               {showProdukDropdown && (
                 <div className="produk-menu-dropdown">
                   <div className="dropdown-item active-prod">
-                    <div className="prod-badge">Cloud ERP</div>
-                    <strong>CashFlow Online</strong>
-                    <p>Sistem akuntansi dan pencatatan operasional bisnis terpadu</p>
+                    <span>CashFlow Online</span>
                   </div>
                   <div className="dropdown-item">
-                    <div className="prod-badge pos">Point of Sale</div>
-                    <strong>CashFlow POS</strong>
-                    <p>Aplikasi kasir pintar untuk ritel dan F&amp;B</p>
+                    <span>CashFlow POS</span>
                   </div>
                   <div className="dropdown-item">
-                    <div className="prod-badge lite">Mobile</div>
-                    <strong>CashFlow Lite</strong>
-                    <p>Pencatatan keuangan praktis via smartphone</p>
+                    <span>CashFlow Lite</span>
+                  </div>
+                  <div className="dropdown-item">
+                    <span>Bliss</span>
+                  </div>
+                  <div className="dropdown-item">
+                    <span>CashFlow Connect &amp; Earn</span>
                   </div>
                 </div>
               )}
@@ -60,13 +79,27 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         <div className="navbar-right">
-          <button className="btn-login-official">Login</button>
+          <button className="btn-login">Login</button>
           
-          <button className="theme-toggle-btn" title="Toggle Theme">
-            <Sun size={18} />
+          <button 
+            className="theme-toggle-btn" 
+            title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            onClick={toggleTheme}
+            aria-label="Toggle Theme"
+          >
+            {isDark ? <Moon size={18} /> : <Sun size={18} />}
           </button>
 
-          <div className="search-bar">
+          {/* Mobile search toggle icon */}
+          <button 
+            className="mobile-search-toggle-btn"
+            onClick={() => setShowMobileSearch(!showMobileSearch)}
+            aria-label="Search"
+          >
+            <Search size={18} />
+          </button>
+
+          <div className={`search-bar ${showMobileSearch ? 'mobile-visible' : ''}`}>
             <Search size={15} className="search-icon-svg" />
             <input 
               type="text" 
