@@ -51,8 +51,8 @@ import { potongFakturDenganUangMukaData } from './pages/pembelian/faktur-pembeli
 import { prosesPoMenjadiTagihanSupplierData } from './pages/pembelian/faktur-pembelian/proses-po-menjadi-tagihan-supplier';
 import { tagihanSupplierSebelumBarangDiterimaData } from './pages/pembelian/faktur-pembelian/tagihan-supplier-sebelum-barang-diterima';
 import { uploadFakturPembelianDariExcelData } from './pages/pembelian/faktur-pembelian/upload-faktur-pembelian-dari-excel';
-import { caraMencatatPembelianDilunasiPihakLainData } from './pages/pembelian/lainnya/cara-mencatat-pembelian-dilunasi-pihak-lain';
-import { caraMencatatKelebihanPembayaranPembelianData } from './pages/pembelian/lainnya/cara-mencatat-kelebihan-pembayaran-pembelian';
+import { caraMencatatPembelianDilunasiPihakLainData } from './pages/pembelian/panduan-pembelian/cara-mencatat-pembelian-dilunasi-pihak-lain';
+import { caraMencatatKelebihanPembayaranPembelianData } from './pages/pembelian/panduan-pembelian/cara-mencatat-kelebihan-pembayaran-pembelian';
 
 // Sub-Modul Pembelian tambahan: Uang Muka, Pembayaran, Pemasok, Transfer
 import { um001Data } from './pages/pembelian/uang-muka-pembelian/cara-mencatat-dp-pembelian-ke-supplier.ts';
@@ -78,9 +78,9 @@ import { pp001Data } from './pages/pembelian/perintah-pembayaran/cara-membuat-pe
 import { tp001Data } from './pages/pembelian/transfer-pemasok/mengenal-fitur-transfer-pemasok.ts';
 import { tp002Data } from './pages/pembelian/transfer-pemasok/cara-membuat-transfer-pemasok-dari-perintah-pembayaran.ts';
 import { tp003Data } from './pages/pembelian/transfer-pemasok/cara-transfer-ke-pemasok-tanpa-perintah-pembayaran.ts';
-import { artBeliPembulatanData } from './pages/pembelian/lainnya/cara-mengatur-akun-pembulatan-pada-faktur-pembelian.ts';
-import { artBeliAlokasiBiayaData } from './pages/pembelian/lainnya/cara-hitung-alokasi-biaya-tambahan-ke-harga-pokok.ts';
-import { artBeliPpnValasData } from './pages/pembelian/lainnya/cara-bayar-ppn-pembelian-barang-dari-luar-negeri.ts';
+import { artBeliPembulatanData } from './pages/pembelian/panduan-pembelian/cara-mengatur-akun-pembulatan-pada-faktur-pembelian.ts';
+import { artBeliAlokasiBiayaData } from './pages/pembelian/panduan-pembelian/cara-hitung-alokasi-biaya-tambahan-ke-harga-pokok.ts';
+import { artBeliPpnValasData } from './pages/pembelian/panduan-pembelian/cara-bayar-ppn-pembelian-barang-dari-luar-negeri.ts';
 
 // Penjualan: Sub-Modul 01: Penawaran Penjualan
 import { caraMembuatPenawaranHargaData } from './pages/penjualan/penawaran-penjualan/cara-membuat-penawaran-harga';

@@ -346,7 +346,7 @@ export const pembelianModules: PembelianModuleMeta[] = [
     ]
   },
   {
-    "name": "Lainnya",
+    "name": "Panduan Pembelian",
     "articles": [
       {
         "id": "art-beli-lain",
@@ -378,65 +378,8 @@ export const pembelianModules: PembelianModuleMeta[] = [
 ];
 
 export const pembelianExtraModules = pembelianModules.filter(
-  (m) => !['Pesanan Pembelian','Penerimaan Barang','Faktur Pembelian','Retur Pembelian','Lainnya'].includes(m.name)
+  (m) => !['Pesanan Pembelian','Penerimaan Barang','Faktur Pembelian','Retur Pembelian'].includes(m.name)
 );
 
 
-export const pembelianLainnyaArticleMetas: PembelianArticleMeta[] = [
-  {
-    "id": "art-beli-lain",
-    "title": "Cara Mencatat Pembelian yang Dilunasi Pihak Lain",
-    "desc": "Catat pembelian yang dibayar pihak ketiga tanpa merusak saldo hutang."
-  },
-  {
-    "id": "art-beli-lebih",
-    "title": "Cara Mencatat Kelebihan Pembayaran Pembelian",
-    "desc": "Solusi mencatat selisih lebih bayar ke supplier agar saldo dan jurnal tetap seimbang."
-  },
-  {
-    "id": "art-beli-pembulatan",
-    "title": "Cara Mengatur Akun Pembulatan pada Faktur Pembelian",
-    "desc": "Atur akun penampung selisih pembulatan agar faktur bisa disimpan."
-  },
-  {
-    "id": "art-beli-alokasi-biaya",
-    "title": "Cara Hitung Alokasi Biaya Tambahan ke Harga Pokok",
-    "desc": "Bebankan ongkir, asuransi, dan biaya lain ke HPP barang."
-  },
-  {
-    "id": "art-beli-ppn-valas",
-    "title": "Cara Bayar PPN Pembelian Barang dari Luar Negeri",
-    "desc": "Catat pembayaran hutang PPN valas atas impor barang."
-  }
-];
-
-const lainnyaNames = [
-  "Uang Muka Pembelian",
-  "Pembayaran Pembelian",
-  "Harga Pemasok",
-  "Klaim Pemasok",
-  "Kategori Pemasok",
-  "Pemasok",
-  "Perintah Pembayaran",
-  "Transfer Pemasok"
-];
-
-export const pembelianLainnyaModules: PembelianModuleMeta[] = pembelianModules.filter((m) =>
-  lainnyaNames.includes(m.name)
-);
-
-const byName = (name: string) => pembelianModules.find((m) => m.name === name)!;
-
-export const pembelianTopModules: PembelianModuleMeta[] = [
-  byName("Pesanan Pembelian"),
-  byName("Penerimaan Barang"),
-  byName("Faktur Pembelian"),
-  {
-    name: "Lainnya",
-    articles: [
-      ...pembelianLainnyaModules.flatMap((m) => m.articles),
-      ...pembelianLainnyaArticleMetas
-    ]
-  },
-  byName("Retur Pembelian")
-];
+export const pembelianTopModules: PembelianModuleMeta[] = pembelianModules;

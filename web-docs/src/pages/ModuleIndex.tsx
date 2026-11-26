@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sparkles } from 'lucide-react';
-import { pembelianModules, pembelianExtraModules, pembelianTopModules, pembelianLainnyaModules, pembelianLainnyaArticleMetas } from '../data/pembelianModules';
+import { pembelianModules, pembelianExtraModules, pembelianTopModules } from '../data/pembelianModules';
 
 // Daftar sub-modul mengikuti struktur referensi help.accurate.id.
 // Modul tanpa panduan tetap ditampilkan agar strukturnya lengkap, dengan status "Segera hadir".
@@ -241,7 +241,7 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
     const ready: Record<string, [number, number]> = { Dashboard: [11, 11], Pengaturan: [73, 6], Perusahaan: [30, 16], 'Buku Besar': [31, 10], 'Kas & Bank': [34, 12], Persediaan: [67, 18], 'Asset Tetap': [21, 8], Manufaktur: [40, 19], 'Proyek Kontraktor': [11, 8], 'Smartlink Tax': [3, 3], Laporan: [45, 9] };
 
     const modulesList = [
-      { name: 'Pembelian', items: 60, subsReady: 12, subsTotal: 12 },
+      { name: 'Pembelian', items: 60, subsReady: 13, subsTotal: 13 },
       { name: 'Penjualan', items: 126, subsReady: 20, subsTotal: 20 },
       ...Object.keys(plannedSubModules).map((name) => ({
         name,
@@ -521,9 +521,9 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
             <span className="doc-nav-label">Previous</span>
             <strong className="doc-nav-title">« Penerimaan Barang</strong>
           </div>
-          <div className="doc-nav-card next" onClick={() => handleSelectModule('Lainnya')}>
+          <div className="doc-nav-card next" onClick={() => handleSelectModule('Pembayaran Pembelian')}>
             <span className="doc-nav-label">Next</span>
-            <strong className="doc-nav-title">Lainnya »</strong>
+            <strong className="doc-nav-title">Pembayaran Pembelian »</strong>
           </div>
         </div>
       </div>
@@ -986,48 +986,6 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
     );
   }
 
-  // MODULE: Lainnya (panduan pembelian di luar PO, penerimaan, dan faktur)
-  if (currentModule === 'Lainnya') {
-    return (
-      <div className="page-index">
-        <h1 className="page-title">Lainnya</h1>
-        <p className="page-subtitle">Uang muka, pembayaran, pemasok, transfer, dan panduan pembelian lainnya</p>
-
-        <div className="articles-grid">
-          {pembelianLainnyaModules.map((mod) => (
-            <div key={mod.name} className="folder-card" onClick={() => handleSelectModule(mod.name)}>
-              <div className="folder-card-header">
-                <span className="theme-doc-card-icon" role="img" aria-label="folder">🗃</span>
-                <h3>{mod.name}</h3>
-              </div>
-              <p className="folder-card-meta">{mod.articles.length} panduan</p>
-            </div>
-          ))}
-          {pembelianLainnyaArticleMetas.map((art) => (
-            <div key={art.id} className="card" onClick={() => setActiveTab(art.id)}>
-              <div className="card-header-icon">
-                <span className="theme-doc-card-icon" style={{ fontSize: '18px', marginRight: '8px' }}>📄</span>
-                <h3>{art.title}</h3>
-              </div>
-              <p>{art.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="doc-nav-grid">
-          <div className="doc-nav-card prev" onClick={() => handleSelectModule('Faktur Pembelian')}>
-            <span className="doc-nav-label">Previous</span>
-            <strong className="doc-nav-title">« Faktur Pembelian</strong>
-          </div>
-          <div className="doc-nav-card next" onClick={() => handleSelectModule('Retur Pembelian')}>
-            <span className="doc-nav-label">Next</span>
-            <strong className="doc-nav-title">Retur Pembelian »</strong>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   // MODULE: Retur Pembelian
   if (currentModule === 'Retur Pembelian') {
     const returArticles = [
@@ -1057,13 +1015,13 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
         </div>
 
         <div className="doc-nav-grid">
-          <div className="doc-nav-card prev" onClick={() => handleSelectModule('Lainnya')}>
+          <div className="doc-nav-card prev" onClick={() => handleSelectModule('Pembayaran Pembelian')}>
             <span className="doc-nav-label">Previous</span>
-            <strong className="doc-nav-title">« Lainnya</strong>
+            <strong className="doc-nav-title">« Pembayaran Pembelian</strong>
           </div>
-          <div className="doc-nav-card next" onClick={() => handleSelectModule('Penjualan')}>
+          <div className="doc-nav-card next" onClick={() => handleSelectModule('Harga Pemasok')}>
             <span className="doc-nav-label">Next</span>
-            <strong className="doc-nav-title">Penjualan »</strong>
+            <strong className="doc-nav-title">Harga Pemasok »</strong>
           </div>
         </div>
       </div>
