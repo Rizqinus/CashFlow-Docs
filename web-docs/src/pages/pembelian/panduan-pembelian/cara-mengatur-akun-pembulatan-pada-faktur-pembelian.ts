@@ -3,7 +3,7 @@ import { ArticleData } from '../../../types/article';
 export const artBeliPembulatanData: ArticleData = {
   "id": "art-beli-pembulatan",
   "title": "Cara mengatur akun pembulatan pada faktur pembelian",
-  "category": "Panduan Pembelian",
+  "category": "Pembelian",
   "readTime": "4 Menit",
   "summary": "Atur akun penampung selisih pembulatan agar faktur bisa disimpan.",
   "steps": [

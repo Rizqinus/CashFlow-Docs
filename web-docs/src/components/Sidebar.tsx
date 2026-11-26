@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
-import { pembelianTopModules } from '../data/pembelianModules';
+import { pembelianTopModules, pembelianGuideArticles } from '../data/pembelianModules';
 
 interface SidebarProps {
   currentModule: string;
@@ -838,6 +838,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             </div>
                           )}
                         </React.Fragment>
+                      ))}
+                      {pembelianGuideArticles.map((art) => (
+                        <div
+                          key={art.id}
+                          className={`leaf-item ${activeTab === art.id ? 'active-sub' : ''}`}
+                          style={{ fontSize: '12.5px' }}
+                          onClick={() => { setCurrentModule('Pembelian'); setActiveTab(art.id); }}
+                        >
+                          <span>{art.title}</span>
+                        </div>
                       ))}
                     </div>
                   )}

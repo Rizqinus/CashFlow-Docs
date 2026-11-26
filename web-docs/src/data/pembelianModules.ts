@@ -344,36 +344,6 @@ export const pembelianModules: PembelianModuleMeta[] = [
         "desc": "Catat transfer langsung untuk pembayaran cepat."
       }
     ]
-  },
-  {
-    "name": "Panduan Pembelian",
-    "articles": [
-      {
-        "id": "art-beli-lain",
-        "title": "Cara Mencatat Pembelian yang Dilunasi Pihak Lain",
-        "desc": "Panduan pencatatan transaksi pembelian yang pembayarannya dilakukan oleh pihak ketiga."
-      },
-      {
-        "id": "art-beli-lebih",
-        "title": "Cara Mencatat Kelebihan Pembayaran Pembelian",
-        "desc": "Solusi mencatat selisih lebih bayar ke supplier agar saldo dan jurnal tetap seimbang."
-      },
-      {
-        "id": "art-beli-pembulatan",
-        "title": "Cara mengatur akun pembulatan pada faktur pembelian",
-        "desc": "Atur akun penampung selisih pembulatan agar faktur bisa disimpan."
-      },
-      {
-        "id": "art-beli-alokasi-biaya",
-        "title": "Cara hitung alokasi biaya tambahan ke harga pokok",
-        "desc": "Bebankan ongkir, asuransi, dan biaya lain ke HPP barang."
-      },
-      {
-        "id": "art-beli-ppn-valas",
-        "title": "Cara bayar PPN pembelian barang dari luar negeri",
-        "desc": "Catat pembayaran hutang PPN valas atas impor barang."
-      }
-    ]
   }
 ];
 
@@ -381,5 +351,34 @@ export const pembelianExtraModules = pembelianModules.filter(
   (m) => !['Pesanan Pembelian','Penerimaan Barang','Faktur Pembelian','Retur Pembelian'].includes(m.name)
 );
 
+
+
+export const pembelianGuideArticles: PembelianArticleMeta[] = [
+  {
+    "id": "art-beli-lain",
+    "title": "Cara mencatat pembelian yang dilunasi pihak lain",
+    "desc": "Panduan pencatatan transaksi pembelian yang pembayarannya dilakukan oleh pihak ketiga."
+  },
+  {
+    "id": "art-beli-lebih",
+    "title": "Cara mencatat kelebihan pembayaran pembelian",
+    "desc": "Solusi mencatat selisih lebih bayar ke supplier agar saldo dan jurnal tetap seimbang."
+  },
+  {
+    "id": "art-beli-pembulatan",
+    "title": "Cara mengatur akun pembulatan pada faktur pembelian",
+    "desc": "Atur akun penampung selisih pembulatan agar faktur bisa disimpan."
+  },
+  {
+    "id": "art-beli-alokasi-biaya",
+    "title": "Cara hitung alokasi biaya tambahan ke harga pokok",
+    "desc": "Bebankan ongkir, asuransi, dan biaya lain ke HPP barang."
+  },
+  {
+    "id": "art-beli-ppn-valas",
+    "title": "Cara bayar PPN pembelian barang dari luar negeri",
+    "desc": "Catat pembayaran hutang PPN valas atas impor barang."
+  }
+];
 
 export const pembelianTopModules: PembelianModuleMeta[] = pembelianModules;

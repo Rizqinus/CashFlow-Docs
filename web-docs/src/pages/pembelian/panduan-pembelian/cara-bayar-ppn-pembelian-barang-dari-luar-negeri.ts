@@ -3,7 +3,7 @@ import { ArticleData } from '../../../types/article';
 export const artBeliPpnValasData: ArticleData = {
   "id": "art-beli-ppn-valas",
   "title": "Cara bayar PPN pembelian barang dari luar negeri",
-  "category": "Panduan Pembelian",
+  "category": "Pembelian",
   "readTime": "4 Menit",
   "summary": "Catat pembayaran hutang PPN valas atas impor barang.",
   "steps": [

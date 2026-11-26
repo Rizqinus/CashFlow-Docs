@@ -3,7 +3,7 @@ import { ArticleData } from '../../../types/article';
 export const artBeliAlokasiBiayaData: ArticleData = {
   "id": "art-beli-alokasi-biaya",
   "title": "Cara hitung alokasi biaya tambahan ke harga pokok",
-  "category": "Panduan Pembelian",
+  "category": "Pembelian",
   "readTime": "4 Menit",
   "summary": "Bebankan ongkir, asuransi, dan biaya lain ke HPP barang.",
   "steps": [

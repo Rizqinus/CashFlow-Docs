@@ -2,7 +2,7 @@ import { ArticleData } from '../../../types/article';
 
 export const caraMencatatPembelianDilunasiPihakLainData: ArticleData = {
   id: 'art-beli-lain',
-  title: 'Cara Mencatat Pembelian yang Dilunasi Pihak Lain',
+  title: 'Cara mencatat pembelian yang dilunasi pihak lain',
   category: 'Pembelian',
   readTime: '3 Menit',
   summary: 'Panduan mencatat pelunasan tagihan faktur pembelian yang dibayarkan oleh pihak ketiga atau rekening perantara.',

@@ -2,7 +2,7 @@ import { ArticleData } from '../../../types/article';
 
 export const caraMencatatKelebihanPembayaranPembelianData: ArticleData = {
   id: 'art-beli-lebih',
-  title: 'Cara Mencatat Kelebihan Pembayaran Pembelian',
+  title: 'Cara mencatat kelebihan pembayaran pembelian',
   category: 'Pembelian',
   readTime: '3 Menit',
   summary: 'Panduan mengelola dana lebih bayar pada transaksi pembelian sebagai saldo deposit pemasok atau uang muka pesanan berikutnya.',

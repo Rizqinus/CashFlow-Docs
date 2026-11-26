@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sparkles } from 'lucide-react';
-import { pembelianModules, pembelianExtraModules, pembelianTopModules } from '../data/pembelianModules';
+import { pembelianModules, pembelianExtraModules, pembelianTopModules, pembelianGuideArticles } from '../data/pembelianModules';
 
 // Daftar sub-modul mengikuti struktur referensi help.accurate.id.
 // Modul tanpa panduan tetap ditampilkan agar strukturnya lengkap, dengan status "Segera hadir".
@@ -241,7 +241,7 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
     const ready: Record<string, [number, number]> = { Dashboard: [11, 11], Pengaturan: [73, 6], Perusahaan: [30, 16], 'Buku Besar': [31, 10], 'Kas & Bank': [34, 12], Persediaan: [67, 18], 'Asset Tetap': [21, 8], Manufaktur: [40, 19], 'Proyek Kontraktor': [11, 8], 'Smartlink Tax': [3, 3], Laporan: [45, 9] };
 
     const modulesList = [
-      { name: 'Pembelian', items: 60, subsReady: 13, subsTotal: 13 },
+      { name: 'Pembelian', items: 60, subsReady: 12, subsTotal: 12 },
       { name: 'Penjualan', items: 126, subsReady: 20, subsTotal: 20 },
       ...Object.keys(plannedSubModules).map((name) => ({
         name,
@@ -371,6 +371,15 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
                 <h3>{mod.name}</h3>
               </div>
               <p className="folder-card-meta">{mod.articles.length} panduan</p>
+            </div>
+          ))}
+          {pembelianGuideArticles.map((art) => (
+            <div key={art.id} className="card" onClick={() => setActiveTab(art.id)}>
+              <div className="card-header-icon">
+                <span className="theme-doc-card-icon" style={{ fontSize: '18px', marginRight: '8px' }}>📄</span>
+                <h3>{art.title}</h3>
+              </div>
+              <p>{art.desc}</p>
             </div>
           ))}
         </div>
