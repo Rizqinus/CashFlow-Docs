@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sparkles } from 'lucide-react';
+import { pembelianModules, pembelianExtraModules } from '../data/pembelianModules';
 
 // Daftar sub-modul mengikuti struktur referensi help.accurate.id.
 // Modul tanpa panduan tetap ditampilkan agar strukturnya lengkap, dengan status "Segera hadir".
@@ -240,7 +241,7 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
     const ready: Record<string, [number, number]> = { Dashboard: [11, 11], Pengaturan: [73, 6], Perusahaan: [30, 16], 'Buku Besar': [31, 10], 'Kas & Bank': [34, 12], Persediaan: [67, 18], 'Asset Tetap': [21, 8], Manufaktur: [40, 19], 'Proyek Kontraktor': [11, 8], 'Smartlink Tax': [3, 3], Laporan: [45, 9] };
 
     const modulesList = [
-      { name: 'Pembelian', items: 34, subsReady: 5, subsTotal: 5 },
+      { name: 'Pembelian', items: 60, subsReady: 12, subsTotal: 12 },
       { name: 'Penjualan', items: 126, subsReady: 20, subsTotal: 20 },
       ...Object.keys(plannedSubModules).map((name) => ({
         name,
@@ -363,46 +364,15 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
         <p className="page-subtitle">Kumpulan modul dan tutorial alur pengadaan & pembelian di CashFlow Online</p>
 
         <div className="articles-grid">
-          <div className="folder-card" onClick={() => handleSelectModule('Pesanan Pembelian')}>
-            <div className="folder-card-header">
-              <span className="theme-doc-card-icon" role="img" aria-label="folder">🗃</span>
-              <h3>Pesanan Pembelian</h3>
+          {pembelianModules.map((mod) => (
+            <div key={mod.name} className="folder-card" onClick={() => handleSelectModule(mod.name)}>
+              <div className="folder-card-header">
+                <span className="theme-doc-card-icon" role="img" aria-label="folder">🗃</span>
+                <h3>{mod.name}</h3>
+              </div>
+              <p className="folder-card-meta">{mod.articles.length} panduan</p>
             </div>
-            <p className="folder-card-meta">8 panduan</p>
-          </div>
-
-          <div className="folder-card" onClick={() => handleSelectModule('Penerimaan Barang')}>
-            <div className="folder-card-header">
-              <span className="theme-doc-card-icon" role="img" aria-label="folder">🗃</span>
-              <h3>Penerimaan Barang</h3>
-            </div>
-            <p className="folder-card-meta">3 panduan</p>
-          </div>
-
-          <div className="folder-card" onClick={() => handleSelectModule('Faktur Pembelian')}>
-            <div className="folder-card-header">
-              <span className="theme-doc-card-icon" role="img" aria-label="folder">🗃</span>
-              <h3>Faktur Pembelian</h3>
-            </div>
-            <p className="folder-card-meta">14 panduan</p>
-          </div>
-
-          <div className="folder-card" onClick={() => handleSelectModule('Retur Pembelian')}>
-            <div className="folder-card-header">
-              <span className="theme-doc-card-icon" role="img" aria-label="folder">🗃</span>
-              <h3>Retur Pembelian</h3>
-            </div>
-            <p className="folder-card-meta">7 panduan</p>
-          </div>
-
-          <div className="folder-card" onClick={() => handleSelectModule('Lainnya')}>
-            <div className="folder-card-header">
-              <span className="theme-doc-card-icon" role="img" aria-label="folder">🗃</span>
-              <h3>Lainnya</h3>
-            </div>
-            <p className="folder-card-meta">2 panduan</p>
-          </div>
-
+          ))}
         </div>
 
         <div className="doc-nav-grid">
@@ -1029,6 +999,21 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
         title: 'Cara Mencatat Kelebihan Pembayaran Pembelian',
         desc: 'Solusi mencatat selisih lebih bayar ke supplier agar saldo dan jurnal tetap seimbang.',
       },
+      {
+        id: 'art-beli-pembulatan',
+        title: 'Cara Mengatur Akun Pembulatan pada Faktur Pembelian',
+        desc: 'Atur akun penampung selisih pembulatan agar faktur bisa disimpan.',
+      },
+      {
+        id: 'art-beli-alokasi-biaya',
+        title: 'Cara Hitung Alokasi Biaya Tambahan ke Harga Pokok',
+        desc: 'Bebankan ongkir, asuransi, dan biaya lain ke HPP barang.',
+      },
+      {
+        id: 'art-beli-ppn-valas',
+        title: 'Cara Bayar PPN Pembelian Barang dari Luar Negeri',
+        desc: 'Catat pembayaran hutang PPN valas atas impor barang.',
+      },
     ];
 
     return (
@@ -1626,6 +1611,43 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
           <div className="doc-nav-card prev" onClick={() => handleSelectModule('Perusahaan')}>
             <span className="doc-nav-label">Previous</span>
             <strong className="doc-nav-title">« Perusahaan</strong>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // MODULE: sub-modul Pembelian tambahan (Uang Muka, Pembayaran, Pemasok, Transfer)
+  const extraPembelian = pembelianExtraModules.find((m) => m.name === currentModule);
+  if (extraPembelian) {
+    const idx = pembelianModules.findIndex((m) => m.name === currentModule);
+    const prev = pembelianModules[idx - 1]?.name || 'Pembelian';
+    const next = pembelianModules[idx + 1]?.name || 'Pembelian';
+    return (
+      <div className="page-index">
+        <h1 className="page-title">{extraPembelian.name}</h1>
+        <p className="page-subtitle">Panduan {extraPembelian.name.toLowerCase()} di CashFlow Online</p>
+
+        <div className="articles-grid">
+          {extraPembelian.articles.map((art) => (
+            <div key={art.id} className="card" onClick={() => setActiveTab(art.id)}>
+              <div className="card-header-icon">
+                <span className="theme-doc-card-icon" style={{ fontSize: '18px', marginRight: '8px' }}>📄</span>
+                <h3>{art.title}</h3>
+              </div>
+              <p>{art.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="doc-nav-grid">
+          <div className="doc-nav-card prev" onClick={() => handleSelectModule(prev)}>
+            <span className="doc-nav-label">Previous</span>
+            <strong className="doc-nav-title">« {prev}</strong>
+          </div>
+          <div className="doc-nav-card next" onClick={() => handleSelectModule(next)}>
+            <span className="doc-nav-label">Next</span>
+            <strong className="doc-nav-title">{next} »</strong>
           </div>
         </div>
       </div>

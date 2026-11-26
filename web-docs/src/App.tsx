@@ -54,6 +54,34 @@ import { uploadFakturPembelianDariExcelData } from './pages/pembelian/faktur-pem
 import { caraMencatatPembelianDilunasiPihakLainData } from './pages/pembelian/lainnya/cara-mencatat-pembelian-dilunasi-pihak-lain';
 import { caraMencatatKelebihanPembayaranPembelianData } from './pages/pembelian/lainnya/cara-mencatat-kelebihan-pembayaran-pembelian';
 
+// Sub-Modul Pembelian tambahan: Uang Muka, Pembayaran, Pemasok, Transfer
+import { um001Data } from './pages/pembelian/uang-muka-pembelian/cara-mencatat-dp-pembelian-ke-supplier.ts';
+import { um002Data } from './pages/pembelian/uang-muka-pembelian/cara-membuat-uang-muka-pembelian-partial.ts';
+import { um003Data } from './pages/pembelian/uang-muka-pembelian/cara-bayar-dp-supplier-dari-pesanan-pembelian.ts';
+import { um004Data } from './pages/pembelian/uang-muka-pembelian/cara-mencatat-uang-muka-pembelian-berupa-barang.ts';
+import { um005Data } from './pages/pembelian/uang-muka-pembelian/cara-menginput-dp-pembelian-lama-di-cashflow.ts';
+import { pb001Data } from './pages/pembelian/pembayaran-pembelian/cara-mencatat-pembayaran-pembelian-ke-supplier.ts';
+import { pb002Data } from './pages/pembelian/pembayaran-pembelian/cara-membuat-pembayaran-pembelian-sebagian.ts';
+import { pb003Data } from './pages/pembelian/pembayaran-pembelian/cara-input-diskon-supplier-saat-bayar-utang.ts';
+import { pb004Data } from './pages/pembelian/pembayaran-pembelian/cara-mengatasi-kelebihan-transfer-ke-supplier.ts';
+import { hp001Data } from './pages/pembelian/harga-pemasok/cara-membuat-harga-pemasok.ts';
+import { kp001Data } from './pages/pembelian/klaim-pemasok/mengenal-fitur-klaim-pemasok.ts';
+import { kp002Data } from './pages/pembelian/klaim-pemasok/cara-membuat-klaim-pemasok-kirim-barang-ke-supplier.ts';
+import { kp003Data } from './pages/pembelian/klaim-pemasok/cara-mencatat-barang-pengganti-hasil-klaim-supplier.ts';
+import { ktp001Data } from './pages/pembelian/kategori-pemasok/cara-mengelompokkan-supplier.ts';
+import { ktp002Data } from './pages/pembelian/kategori-pemasok/cara-membagi-supplier-dalam-beberapa-kelompok.ts';
+import { pms001Data } from './pages/pembelian/pemasok/cara-menambahkan-supplier-baru.ts';
+import { pms002Data } from './pages/pembelian/pemasok/cara-import-supplier-dari-excel.ts';
+import { pms003Data } from './pages/pembelian/pemasok/cara-menggunakan-lebih-dari-satu-akun-utang-untuk-pemasok.ts';
+import { pms004Data } from './pages/pembelian/pemasok/solusi-nilai-pph-21-lebih-tinggi-dari-tarif-seharusnya.ts';
+import { pp001Data } from './pages/pembelian/perintah-pembayaran/cara-membuat-perintah-pembayaran-ke-pemasok.ts';
+import { tp001Data } from './pages/pembelian/transfer-pemasok/mengenal-fitur-transfer-pemasok.ts';
+import { tp002Data } from './pages/pembelian/transfer-pemasok/cara-membuat-transfer-pemasok-dari-perintah-pembayaran.ts';
+import { tp003Data } from './pages/pembelian/transfer-pemasok/cara-transfer-ke-pemasok-tanpa-perintah-pembayaran.ts';
+import { artBeliPembulatanData } from './pages/pembelian/lainnya/cara-mengatur-akun-pembulatan-pada-faktur-pembelian.ts';
+import { artBeliAlokasiBiayaData } from './pages/pembelian/lainnya/cara-hitung-alokasi-biaya-tambahan-ke-harga-pokok.ts';
+import { artBeliPpnValasData } from './pages/pembelian/lainnya/cara-bayar-ppn-pembelian-barang-dari-luar-negeri.ts';
+
 // Penjualan: Sub-Modul 01: Penawaran Penjualan
 import { caraMembuatPenawaranHargaData } from './pages/penjualan/penawaran-penjualan/cara-membuat-penawaran-harga';
 import { penawaranPenjualanPkpDanBiayaData } from './pages/penjualan/penawaran-penjualan/penawaran-penjualan-pkp-dan-biaya';
@@ -598,7 +626,34 @@ const articleDataMap: Record<string, ArticleData> = {
   // 04 Lainnya / Pembayaran
   'art-beli-lain': caraMencatatPembelianDilunasiPihakLainData,
   'art-beli-lebih': caraMencatatKelebihanPembayaranPembelianData,
-  'art-beli-pembulatan': errorAkunPembulatanBelumDiisiData,
+  'art-beli-pembulatan': artBeliPembulatanData,
+  'art-beli-alokasi-biaya': artBeliAlokasiBiayaData,
+  'art-beli-ppn-valas': artBeliPpnValasData,
+
+  // Sub-Modul Pembelian tambahan
+  'um-001': um001Data,
+  'um-002': um002Data,
+  'um-003': um003Data,
+  'um-004': um004Data,
+  'um-005': um005Data,
+  'pb-001': pb001Data,
+  'pb-002': pb002Data,
+  'pb-003': pb003Data,
+  'pb-004': pb004Data,
+  'hp-001': hp001Data,
+  'kp-001': kp001Data,
+  'kp-002': kp002Data,
+  'kp-003': kp003Data,
+  'ktp-001': ktp001Data,
+  'ktp-002': ktp002Data,
+  'pms-001': pms001Data,
+  'pms-002': pms002Data,
+  'pms-003': pms003Data,
+  'pms-004': pms004Data,
+  'pp-001': pp001Data,
+  'tp-001': tp001Data,
+  'tp-002': tp002Data,
+  'tp-003': tp003Data,
 
   // 05 Retur Pembelian
   'rp-001': rp001Data,

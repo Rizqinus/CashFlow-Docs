@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
+import { pembelianModules } from '../data/pembelianModules';
 
 interface SidebarProps {
   currentModule: string;
@@ -792,10 +793,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   )}
                 </div>
 
-                {/* 3.6 PENJUALAN */}
+                {/* 3.6 PEMBELIAN */}
                 <div className="module-group">
-                  <div 
-                    className={`module-header ${currentModule === 'Pembelian' ? 'active-sub' : ''}`} 
+                  <div
+                    className={`module-header ${currentModule === 'Pembelian' ? 'active-sub' : ''}`}
                     onClick={() => {
                       toggleCategory('pembelian');
                       handleSelectModule('Pembelian');
@@ -806,25 +807,42 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   </div>
                   {openCategories.pembelian && (
                     <div className="module-children">
-                      <div className={`leaf-item ${currentModule === 'Pesanan Pembelian' ? 'active-sub' : ''}`} onClick={() => { if (currentModule === 'Pesanan Pembelian') setClosedNodes(s => ({ ...s, ["Pesanan Pembelian"]: !s["Pesanan Pembelian"] })); else { setClosedNodes(s => ({ ...s, ["Pesanan Pembelian"]: false })); handleSelectModule('Pesanan Pembelian'); } }}><span>Pesanan Pembelian</span><span className={`arrow ${currentModule === 'Pesanan Pembelian' && !closedNodes["Pesanan Pembelian"] ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span></div>
-                      <div className={`leaf-item ${currentModule === 'Penerimaan Barang' ? 'active-sub' : ''}`} onClick={() => { if (currentModule === 'Penerimaan Barang') setClosedNodes(s => ({ ...s, ["Penerimaan Barang"]: !s["Penerimaan Barang"] })); else { setClosedNodes(s => ({ ...s, ["Penerimaan Barang"]: false })); handleSelectModule('Penerimaan Barang'); } }}><span>Penerimaan Barang</span><span className={`arrow ${currentModule === 'Penerimaan Barang' && !closedNodes["Penerimaan Barang"] ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span></div>
-                      <div className={`leaf-item ${currentModule === 'Faktur Pembelian' ? 'active-sub' : ''}`} onClick={() => { if (currentModule === 'Faktur Pembelian') setClosedNodes(s => ({ ...s, ["Faktur Pembelian"]: !s["Faktur Pembelian"] })); else { setClosedNodes(s => ({ ...s, ["Faktur Pembelian"]: false })); handleSelectModule('Faktur Pembelian'); } }}><span>Faktur Pembelian</span><span className={`arrow ${currentModule === 'Faktur Pembelian' && !closedNodes["Faktur Pembelian"] ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span></div>
-                      <div className={`leaf-item ${currentModule === 'Lainnya' ? 'active-sub' : ''}`} onClick={() => { if (currentModule === 'Lainnya') setClosedNodes(s => ({ ...s, ["Lainnya"]: !s["Lainnya"] })); else { setClosedNodes(s => ({ ...s, ["Lainnya"]: false })); handleSelectModule('Lainnya'); } }}><span>Lainnya</span><span className={`arrow ${currentModule === 'Lainnya' && !closedNodes["Lainnya"] ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span></div>
-                      <div className={`leaf-item ${currentModule === 'Retur Pembelian' ? 'active-sub' : ''}`} onClick={() => { if (currentModule === 'Retur Pembelian') setClosedNodes(s => ({ ...s, ["Retur Pembelian"]: !s["Retur Pembelian"] })); else { setClosedNodes(s => ({ ...s, ["Retur Pembelian"]: false })); handleSelectModule('Retur Pembelian'); } }}><span>Retur Pembelian</span><span className={`arrow ${currentModule === 'Retur Pembelian' && !closedNodes["Retur Pembelian"] ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span></div>
-                      {currentModule === 'Retur Pembelian' && !closedNodes["Retur Pembelian"] && (
-                        <div className="module-children" style={{ paddingLeft: '14px' }}>
-                      <div className={`leaf-item ${activeTab === 'rp-001' ? 'active-sub' : ''}`} style={{ fontSize: '12.5px' }} onClick={() => { setCurrentModule('Retur Pembelian'); setActiveTab('rp-001'); }}><span>Fitur Retur Pembelian CashFlow Online dan Fungsinya</span></div>
-                      <div className={`leaf-item ${activeTab === 'rp-002' ? 'active-sub' : ''}`} style={{ fontSize: '12.5px' }} onClick={() => { setCurrentModule('Retur Pembelian'); setActiveTab('rp-002'); }}><span>Cara Mencatat Pengembalian Barang ke Supplier dari Faktur</span></div>
-                      <div className={`leaf-item ${activeTab === 'rp-003' ? 'active-sub' : ''}`} style={{ fontSize: '12.5px' }} onClick={() => { setCurrentModule('Retur Pembelian'); setActiveTab('rp-003'); }}><span>Cara Membuat Retur Pembelian Sebagian</span></div>
-                      <div className={`leaf-item ${activeTab === 'rp-004' ? 'active-sub' : ''}`} style={{ fontSize: '12.5px' }} onClick={() => { setCurrentModule('Retur Pembelian'); setActiveTab('rp-004'); }}><span>Cara Retur Barang ke Supplier Setelah Pembayaran Lunas</span></div>
-                      <div className={`leaf-item ${activeTab === 'rp-005' ? 'active-sub' : ''}`} style={{ fontSize: '12.5px' }} onClick={() => { setCurrentModule('Retur Pembelian'); setActiveTab('rp-005'); }}><span>Cara Mencatat Retur Pembelian untuk Faktur Dimuka</span></div>
-                      <div className={`leaf-item ${activeTab === 'rp-006' ? 'active-sub' : ''}`} style={{ fontSize: '12.5px' }} onClick={() => { setCurrentModule('Retur Pembelian'); setActiveTab('rp-006'); }}><span>Cara Mengembalikan Biaya yang Sudah Ditagihkan Supplier</span></div>
-                      <div className={`leaf-item ${activeTab === 'rp-007' ? 'active-sub' : ''}`} style={{ fontSize: '12.5px' }} onClick={() => { setCurrentModule('Retur Pembelian'); setActiveTab('rp-007'); }}><span>Cara Retur Pembelian Jasa</span></div>
-                        </div>
-                      )}
+                      {pembelianModules.map((mod) => (
+                        <React.Fragment key={mod.name}>
+                          <div
+                            className={`leaf-item ${currentModule === mod.name ? 'active-sub' : ''}`}
+                            onClick={() => {
+                              if (currentModule === mod.name) {
+                                setClosedNodes((prev) => ({ ...prev, [mod.name]: !prev[mod.name] }));
+                              } else {
+                                setClosedNodes((prev) => ({ ...prev, [mod.name]: false }));
+                                handleSelectModule(mod.name);
+                              }
+                            }}
+                          >
+                            <span>{mod.name}</span>
+                            <span className={`arrow ${currentModule === mod.name && !closedNodes[mod.name] ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                          </div>
+                          {currentModule === mod.name && !closedNodes[mod.name] && (
+                            <div className="module-children" style={{ paddingLeft: '14px' }}>
+                              {mod.articles.map((art) => (
+                                <div
+                                  key={art.id}
+                                  className={`leaf-item ${activeTab === art.id ? 'active-sub' : ''}`}
+                                  style={{ fontSize: '12.5px' }}
+                                  onClick={() => { setCurrentModule(mod.name); setActiveTab(art.id); }}
+                                >
+                                  <span>{art.title}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </React.Fragment>
+                      ))}
                     </div>
                   )}
                 </div>
+
                 <div className="module-group">
                   <div 
                     className={`module-header ${currentModule === 'Penjualan' ? 'active-sub' : ''}`} 
