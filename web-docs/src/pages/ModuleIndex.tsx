@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sparkles } from 'lucide-react';
-import { pembelianModules, pembelianExtraModules } from '../data/pembelianModules';
+import { pembelianModules, pembelianExtraModules, pembelianTopModules, pembelianLainnyaModules, pembelianLainnyaArticleMetas } from '../data/pembelianModules';
 
 // Daftar sub-modul mengikuti struktur referensi help.accurate.id.
 // Modul tanpa panduan tetap ditampilkan agar strukturnya lengkap, dengan status "Segera hadir".
@@ -364,7 +364,7 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
         <p className="page-subtitle">Kumpulan modul dan tutorial alur pengadaan & pembelian di CashFlow Online</p>
 
         <div className="articles-grid">
-          {pembelianModules.map((mod) => (
+          {pembelianTopModules.map((mod) => (
             <div key={mod.name} className="folder-card" onClick={() => handleSelectModule(mod.name)}>
               <div className="folder-card-header">
                 <span className="theme-doc-card-icon" role="img" aria-label="folder">🗃</span>
@@ -988,41 +988,22 @@ export const ModuleIndex: React.FC<ModuleIndexProps> = ({
 
   // MODULE: Lainnya (panduan pembelian di luar PO, penerimaan, dan faktur)
   if (currentModule === 'Lainnya') {
-    const lainnyaArticles = [
-      {
-        id: 'art-beli-lain',
-        title: 'Cara Mencatat Pembelian yang Dilunasi Pihak Lain',
-        desc: 'Panduan pencatatan transaksi pembelian yang pembayarannya dilakukan oleh pihak ketiga.',
-      },
-      {
-        id: 'art-beli-lebih',
-        title: 'Cara Mencatat Kelebihan Pembayaran Pembelian',
-        desc: 'Solusi mencatat selisih lebih bayar ke supplier agar saldo dan jurnal tetap seimbang.',
-      },
-      {
-        id: 'art-beli-pembulatan',
-        title: 'Cara Mengatur Akun Pembulatan pada Faktur Pembelian',
-        desc: 'Atur akun penampung selisih pembulatan agar faktur bisa disimpan.',
-      },
-      {
-        id: 'art-beli-alokasi-biaya',
-        title: 'Cara Hitung Alokasi Biaya Tambahan ke Harga Pokok',
-        desc: 'Bebankan ongkir, asuransi, dan biaya lain ke HPP barang.',
-      },
-      {
-        id: 'art-beli-ppn-valas',
-        title: 'Cara Bayar PPN Pembelian Barang dari Luar Negeri',
-        desc: 'Catat pembayaran hutang PPN valas atas impor barang.',
-      },
-    ];
-
     return (
       <div className="page-index">
         <h1 className="page-title">Lainnya</h1>
-        <p className="page-subtitle">Panduan tambahan di luar alur Pesanan, Penerimaan, dan Faktur Pembelian</p>
+        <p className="page-subtitle">Uang muka, pembayaran, pemasok, transfer, dan panduan pembelian lainnya</p>
 
         <div className="articles-grid">
-          {lainnyaArticles.map((art) => (
+          {pembelianLainnyaModules.map((mod) => (
+            <div key={mod.name} className="folder-card" onClick={() => handleSelectModule(mod.name)}>
+              <div className="folder-card-header">
+                <span className="theme-doc-card-icon" role="img" aria-label="folder">🗃</span>
+                <h3>{mod.name}</h3>
+              </div>
+              <p className="folder-card-meta">{mod.articles.length} panduan</p>
+            </div>
+          ))}
+          {pembelianLainnyaArticleMetas.map((art) => (
             <div key={art.id} className="card" onClick={() => setActiveTab(art.id)}>
               <div className="card-header-icon">
                 <span className="theme-doc-card-icon" style={{ fontSize: '18px', marginRight: '8px' }}>📄</span>

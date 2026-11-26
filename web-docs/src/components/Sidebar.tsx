@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
-import { pembelianModules } from '../data/pembelianModules';
+import { pembelianTopModules, pembelianLainnyaModules, pembelianLainnyaArticleMetas } from '../data/pembelianModules';
 
 interface SidebarProps {
   currentModule: string;
@@ -22,6 +22,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setCurrentModule
 }) => {
   const [closedNodes, setClosedNodes] = React.useState<Record<string, boolean>>({});
+  const inPembelianLainnya = currentModule === 'Lainnya' || pembelianLainnyaModules.some((m) => m.name === currentModule);
 
   return (
     <aside className="sidebar">
@@ -807,37 +808,102 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   </div>
                   {openCategories.pembelian && (
                     <div className="module-children">
-                      {pembelianModules.map((mod) => (
-                        <React.Fragment key={mod.name}>
-                          <div
-                            className={`leaf-item ${currentModule === mod.name ? 'active-sub' : ''}`}
-                            onClick={() => {
-                              if (currentModule === mod.name) {
-                                setClosedNodes((prev) => ({ ...prev, [mod.name]: !prev[mod.name] }));
-                              } else {
-                                setClosedNodes((prev) => ({ ...prev, [mod.name]: false }));
-                                handleSelectModule(mod.name);
-                              }
-                            }}
-                          >
-                            <span>{mod.name}</span>
-                            <span className={`arrow ${currentModule === mod.name && !closedNodes[mod.name] ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
-                          </div>
-                          {currentModule === mod.name && !closedNodes[mod.name] && (
-                            <div className="module-children" style={{ paddingLeft: '14px' }}>
-                              {mod.articles.map((art) => (
-                                <div
-                                  key={art.id}
-                                  className={`leaf-item ${activeTab === art.id ? 'active-sub' : ''}`}
-                                  style={{ fontSize: '12.5px' }}
-                                  onClick={() => { setCurrentModule(mod.name); setActiveTab(art.id); }}
-                                >
-                                  <span>{art.title}</span>
-                                </div>
-                              ))}
+                      {pembelianTopModules.map((mod) => (
+                        mod.name === 'Lainnya' ? (
+                          <React.Fragment key="Lainnya">
+                            <div
+                              className={`leaf-item ${inPembelianLainnya ? 'active-sub' : ''}`}
+                              onClick={() => {
+                                if (currentModule === 'Lainnya') {
+                                  setClosedNodes((prev) => ({ ...prev, Lainnya: !prev.Lainnya }));
+                                } else {
+                                  setClosedNodes((prev) => ({ ...prev, Lainnya: false }));
+                                  handleSelectModule('Lainnya');
+                                }
+                              }}
+                            >
+                              <span>Lainnya</span>
+                              <span className={`arrow ${inPembelianLainnya && !closedNodes['Lainnya'] ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
                             </div>
-                          )}
-                        </React.Fragment>
+                            {inPembelianLainnya && !closedNodes['Lainnya'] && (
+                              <div className="module-children" style={{ paddingLeft: '14px' }}>
+                                {pembelianLainnyaModules.map((sub) => (
+                                  <React.Fragment key={sub.name}>
+                                    <div
+                                      className={`leaf-item ${currentModule === sub.name ? 'active-sub' : ''}`}
+                                      onClick={() => {
+                                        if (currentModule === sub.name) {
+                                          setClosedNodes((prev) => ({ ...prev, [sub.name]: !prev[sub.name] }));
+                                        } else {
+                                          setClosedNodes((prev) => ({ ...prev, [sub.name]: false }));
+                                          handleSelectModule(sub.name);
+                                        }
+                                      }}
+                                    >
+                                      <span>{sub.name}</span>
+                                      <span className={`arrow ${currentModule === sub.name && !closedNodes[sub.name] ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                                    </div>
+                                    {currentModule === sub.name && !closedNodes[sub.name] && (
+                                      <div className="module-children" style={{ paddingLeft: '14px' }}>
+                                        {sub.articles.map((art) => (
+                                          <div
+                                            key={art.id}
+                                            className={`leaf-item ${activeTab === art.id ? 'active-sub' : ''}`}
+                                            style={{ fontSize: '12.5px' }}
+                                            onClick={() => { setCurrentModule(sub.name); setActiveTab(art.id); }}
+                                          >
+                                            <span>{art.title}</span>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    )}
+                                  </React.Fragment>
+                                ))}
+                                {pembelianLainnyaArticleMetas.map((art) => (
+                                  <div
+                                    key={art.id}
+                                    className={`leaf-item ${activeTab === art.id ? 'active-sub' : ''}`}
+                                    style={{ fontSize: '12.5px' }}
+                                    onClick={() => { setCurrentModule('Lainnya'); setActiveTab(art.id); }}
+                                  >
+                                    <span>{art.title}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </React.Fragment>
+                        ) : (
+                          <React.Fragment key={mod.name}>
+                            <div
+                              className={`leaf-item ${currentModule === mod.name ? 'active-sub' : ''}`}
+                              onClick={() => {
+                                if (currentModule === mod.name) {
+                                  setClosedNodes((prev) => ({ ...prev, [mod.name]: !prev[mod.name] }));
+                                } else {
+                                  setClosedNodes((prev) => ({ ...prev, [mod.name]: false }));
+                                  handleSelectModule(mod.name);
+                                }
+                              }}
+                            >
+                              <span>{mod.name}</span>
+                              <span className={`arrow ${currentModule === mod.name && !closedNodes[mod.name] ? 'down' : ''}`}><ChevronRight size={14} strokeWidth={2} /></span>
+                            </div>
+                            {currentModule === mod.name && !closedNodes[mod.name] && (
+                              <div className="module-children" style={{ paddingLeft: '14px' }}>
+                                {mod.articles.map((art) => (
+                                  <div
+                                    key={art.id}
+                                    className={`leaf-item ${activeTab === art.id ? 'active-sub' : ''}`}
+                                    style={{ fontSize: '12.5px' }}
+                                    onClick={() => { setCurrentModule(mod.name); setActiveTab(art.id); }}
+                                  >
+                                    <span>{art.title}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </React.Fragment>
+                        )
                       ))}
                     </div>
                   )}
